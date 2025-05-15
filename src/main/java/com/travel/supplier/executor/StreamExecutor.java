@@ -3,6 +3,7 @@ package com.travel.supplier.executor;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.travel.supplier.encode.Encryptor;
 import com.travel.supplier.vendor.VendorCaller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -47,8 +48,7 @@ public class StreamExecutor {
         wrapper.put("totalFlights", root.path("totalFlights").asInt(0));
         wrapper.set("flights", flights);
 
-        String base64 = encoder.encodeToString(wrapper.toString().getBytes(StandardCharsets.UTF_8));
-        return "data:" + base64 + "\n\n";
+        return Encryptor.encryptAndCompress(wrapper.toString());
     }
 }
 

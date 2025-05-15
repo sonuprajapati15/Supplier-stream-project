@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FlightCarousel from './components/FlightCarousel';
 import FlightDetailsModal from './components/FlightDetailsModal';
+import {decryptAndDecompress} from './decrypt/decryptAndDecompress'
 import './index.css';
 
 const App = () => {
@@ -13,7 +14,8 @@ const App = () => {
         source.onmessage = (event) => {
             if (event.data && !event.data.startsWith("event:")) {
                 try {
-                    const decoded = atob(event.data.substring(5));
+                    const decoded = decryptAndDecompress(event.data.substring(5));
+                    console.log(decoded)
                     const parsed = JSON.parse(decoded);
                     if (parsed.flights && Array.isArray(parsed.flights)) {
                         setFlights(prev => [...prev, ...parsed.flights]);
