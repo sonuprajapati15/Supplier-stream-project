@@ -17,13 +17,14 @@ public class StreamExecutor {
     private final List<VendorCaller> vendorCallers;
     private final ObjectMapper mapper = new ObjectMapper();
     private final Base64.Encoder encoder = Base64.getEncoder();
+    private static final Integer MAX_OUTBOUND_COUNT = 100;
 
     public StreamExecutor(List<VendorCaller> vendorCallers) {
         this.vendorCallers = vendorCallers;
     }
 
     public Flux<String> streamFlights() {
-        return Flux.range(1, 200)
+        return Flux.range(1, MAX_OUTBOUND_COUNT)
                 .concatMap(page ->
                         Flux.fromIterable(vendorCallers)
                                 .concatMap(vendor -> vendor.fetchFlights(page)

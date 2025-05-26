@@ -22,7 +22,7 @@ public class Vendor1Caller implements VendorCaller {
 
     @Override
     public String getLogo() {
-        return "Vendor2";
+        return "Vendor1";
     }
 
     @Override
