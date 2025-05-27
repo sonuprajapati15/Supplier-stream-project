@@ -8,7 +8,6 @@ import com.travel.supplier.vendor.VendorCaller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 
@@ -50,6 +49,18 @@ public class StreamExecutor {
         wrapper.set("flights", flights);
 
         return Encryptor.encryptAndCompress(wrapper.toString());
+    }
+
+    public Flux<String> streamSearchFlights(String from, String to) {
+        return Flux.range(1, MAX_OUTBOUND_COUNT)
+                .concatMap(page ->
+                        Flux.fromIterable(vendorCallers)
+                                .concatMap(vendor -> vendor.fetchSearchFlights(from, to, page)
+                                        .map(json -> encodeFlightJson(json, vendor.getVendorName(), vendor.getLogo(), page))
+                                        .onErrorResume(e -> Mono.just("event:error\ndata:" + e.getMessage() + "\n\n"))
+                                )
+                )
+                .takeUntil(data -> data.startsWith("event:completed") || data.startsWith("event:error"));
     }
 }
 
