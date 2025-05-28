@@ -6,7 +6,7 @@ import FlightDetailModal from './FlightDetailModal';
 import FiltersPanel from './FiltersPanel';
 import FetchingBar from './FetchingBar';
 import CompletionPopup from './CompletionPopup';
-import { decryptAndDecompress } from '../decrypt/decryptAndDecompress';
+import { decryptAndDecompress } from '../../../egencia/src/decrypt/decryptAndDecompress';
 
 const API_URL = "http://localhost:9000/supplier/stream/flights";
 

@@ -1,0 +1,9 @@
+.eg-trip-details {
+  background: var(--eg-white);
+  border-radius: 8px;
+  box-shadow: var(--eg-shadow);
+  padding: 22px 24px;
+  margin: 0 auto;
+  min-width: 240px;
+  max-width: 420px;
+}

@@ -1,0 +1,39 @@
+.eg-trips-list {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+
+.eg-trip-card {
+  background: var(--eg-white);
+  border: 1.5px solid var(--eg-border);
+  border-radius: 8px;
+  box-shadow: var(--eg-shadow);
+  padding: 18px 22px;
+  min-width: 200px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: box-shadow 0.15s, border 0.15s;
+}
+
+.eg-trip-card:hover {
+  border-color: var(--eg-blue);
+  box-shadow: 0 4px 14px rgba(16,61,124,0.16);
+}
+
+.eg-trip-card-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--eg-blue);
+}
+
+.eg-trip-card-date, .eg-trip-card-status {
+  font-size: 15px;
+  color: #444;
+}
+
+.eg-trips-empty {
+  color: #888;
+  font-style: italic;
+  margin-top: 12px;
+}

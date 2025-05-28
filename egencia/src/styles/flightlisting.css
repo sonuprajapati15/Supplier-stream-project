@@ -1,0 +1,36 @@
+.eg-listing-table {
+  background: var(--eg-white);
+  border-radius: 8px;
+  box-shadow: var(--eg-shadow);
+  padding: 12px 0;
+}
+
+.eg-listing-header, .eg-listing-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.5fr 2fr 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--eg-border);
+}
+
+.eg-listing-header {
+  font-weight: bold;
+  background: var(--eg-grey);
+  border-radius: 8px 8px 0 0;
+}
+
+.eg-listing-row:last-child {
+  border-bottom: none;
+}
+
+.eg-listing-cat-btn {
+  background: var(--eg-yellow);
+  color: var(--eg-blue);
+  border: none;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 14px;
+  margin: 0 3px 3px 0;
+  cursor: pointer;
+}
