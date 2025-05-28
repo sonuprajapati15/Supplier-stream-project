@@ -2,8 +2,8 @@ package com.travel.supplier.vendor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class Vendor1Caller implements VendorCaller {
@@ -14,6 +14,8 @@ public class Vendor1Caller implements VendorCaller {
     private final String vendor1FlightSearchEndpoint;
     private final String vendor1CitySearchEndpoint;
     private final String saveBookingEndpoint;
+    private final RestTemplate restTemplate ;
+
 
 
     public Vendor1Caller(WebClient webClient, String endpoint, String flightBookingEndpoint,
@@ -24,6 +26,7 @@ public class Vendor1Caller implements VendorCaller {
         this.vendor1FlightSearchEndpoint = vendor1FlightSearchEndpoint;
         this.vendor1CitySearchEndpoint = vendor1CitySearchEndpoint;
         this.saveBookingEndpoint = saveBookingEndpoint;
+        this.restTemplate = new RestTemplate();
     }
 
     @Override
@@ -52,18 +55,8 @@ public class Vendor1Caller implements VendorCaller {
     }
 
     @Override
-    public Mono<JsonNode> fetchAllBookings(String userId) {
-        return webClient.get()
-                .uri(bookingEndpoint + "?userId=" + userId)
-                .retrieve()
-                .bodyToMono(String.class)
-                .map(response -> {
-                    try {
-                        return new ObjectMapper().readTree(response);
-                    } catch (Exception e) {
-                        throw new RuntimeException("Failed to parse JSON", e);
-                    }
-                });
+    public String fetchAllBookings(String userId) {
+        return restTemplate.getForObject(bookingEndpoint + "?userId=" + userId, String.class);
     }
 
     @Override

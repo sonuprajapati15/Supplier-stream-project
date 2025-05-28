@@ -77,7 +77,7 @@ const FlightSearchPage: React.FC = () => {
           console.error('Decode or parse error:', err);
         }
       }
-      if (event.data && event.data.startsWith("event:completed")) {
+      if (event.data && event.data.startsWith("event:completed\ndata:Flight")) {
         source.close();
         setLoading(false);
         setTimeout(() => setShowPopup(true), 200); // show popup after bar turns green

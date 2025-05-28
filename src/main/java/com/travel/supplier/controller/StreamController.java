@@ -6,7 +6,9 @@ import com.travel.supplier.vendor.Vendor1Caller;
 import com.travel.supplier.vendor.Vendor2Caller;
 import com.travel.supplier.vendor.VendorCaller;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -23,18 +25,17 @@ public class StreamController {
 
     public StreamController(WebClient.Builder webClientBuilder,
                             @Value("${external.api.endpoint.vendor1}") String vendor1Endpoint,
+                            @Value("${external.api.endpoint.vendor2}") String vendor2Endpoint,
                             @Value("${external.api.booking.endpoint.vendor1}") String flightBookingEndpoint,
                             @Value("${external.api.booking.save.endpoint.vendor1}") String saveBookingEndpoint,
                             @Value("${external.api.flight.search.endpoint.vendor1}") String vendor1FlightSearchEndpoint,
-                            @Value("${external.api.city.search.endpoint.vendor1}") String vendor1CitySearchEndpoint,
                             @Value("${external.api.flight.search.endpoint.vendor2}") String vendor2FlightSearchEndpoint,
-                            @Value("${external.api.city.search.endpoint.vendor2}") String vendor2CitySearchEndpoint,
-                            @Value("${external.api.endpoint.vendor2}") String vendor2Endpoint) {
+                            @Value("${external.api.city.search.endpoint.vendor1}") String vendor1CitySearchEndpoint) {
 
         vendor1Caller = new Vendor1Caller(webClientBuilder.build(), vendor1Endpoint,
                 flightBookingEndpoint, vendor1FlightSearchEndpoint, vendor1CitySearchEndpoint, saveBookingEndpoint);
         List<VendorCaller> callers = List.of(vendor1Caller,
-                new Vendor2Caller(webClientBuilder.build(), vendor2Endpoint, vendor2FlightSearchEndpoint, vendor2CitySearchEndpoint)
+                new Vendor2Caller(webClientBuilder.build(), vendor2Endpoint, vendor2FlightSearchEndpoint)
         );
 
         this.streamExecutor = new StreamExecutor(callers);
@@ -60,8 +61,8 @@ public class StreamController {
     }
 
    @GetMapping(value = "/stream/all/booking", produces = MediaType.APPLICATION_JSON_VALUE)
-   public Mono<JsonNode> streamAllBookings(@RequestParam(required = false, defaultValue = "1234") String userId) {
-       return vendor1Caller.fetchAllBookings(userId);
+   public ResponseEntity<String> streamAllBookings(@RequestParam(required = false, defaultValue = "1234") String userId) {
+       return new ResponseEntity<>(vendor1Caller.fetchAllBookings(userId), HttpStatus.OK);
    }
 
    @GetMapping(value = "/stream/all/cities", produces = MediaType.APPLICATION_JSON_VALUE)

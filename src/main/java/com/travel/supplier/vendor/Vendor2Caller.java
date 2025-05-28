@@ -10,14 +10,12 @@ public class Vendor2Caller implements VendorCaller {
     private final WebClient webClient;
     private final String endpoint;
     private final String vendor2FlightSearchEndpoint;
-    private final String vendor2CitySearchEndpoint;
 
 
-    public Vendor2Caller(WebClient webClient, String endpoint, String vendor2FlightSearchEndpoint, String vendor2CitySearchEndpoint) {
+    public Vendor2Caller(WebClient webClient, String endpoint, String vendor2FlightSearchEndpoint) {
         this.webClient = webClient;
         this.endpoint = endpoint;
         this.vendor2FlightSearchEndpoint = vendor2FlightSearchEndpoint;
-        this.vendor2CitySearchEndpoint = vendor2CitySearchEndpoint;
     }
 
 
@@ -48,7 +46,7 @@ public class Vendor2Caller implements VendorCaller {
     }
 
     @Override
-    public Mono<JsonNode> fetchAllBookings(String userId) {
+    public String fetchAllBookings(String userId) {
         return null;
     }
 

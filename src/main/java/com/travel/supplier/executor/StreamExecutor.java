@@ -52,15 +52,18 @@ public class StreamExecutor {
     }
 
     public Flux<String> streamSearchFlights(String from, String to) {
-        return Flux.range(1, MAX_OUTBOUND_COUNT)
-                .concatMap(page ->
-                        Flux.fromIterable(vendorCallers)
-                                .concatMap(vendor -> vendor.fetchSearchFlights(from, to, page)
-                                        .map(json -> encodeFlightJson(json, vendor.getVendorName(), vendor.getLogo(), page))
-                                        .onErrorResume(e -> Mono.just("event:error\ndata:" + e.getMessage() + "\n\n"))
-                                )
-                )
-                .takeUntil(data -> data.startsWith("event:completed") || data.startsWith("event:error"));
+        return Flux.range(1, 10)
+            .concatMap(page ->
+                Flux.fromIterable(vendorCallers)
+                    .concatMap(vendor -> vendor.fetchSearchFlights(from, to, page)
+                        .map(json -> encodeFlightJson(json, vendor.getVendorName(), vendor.getLogo(), page))
+                        .onErrorResume(e -> Mono.just("event:error\ndata:"+ vendor.getVendorName() + e.getMessage() + "\n\n"))
+                    )
+            )
+            .takeUntil(data -> vendorCallers.stream()
+                .allMatch(vendor -> data.startsWith("event:completed data:"+vendor.getVendorName()+" completed") ||
+                                    data.startsWith("event:error\ndata:" + vendor.getVendorName()))
+            );
     }
 }
 
