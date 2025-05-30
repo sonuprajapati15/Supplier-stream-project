@@ -2,6 +2,7 @@ package com.travel.supplier.vendor;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -76,8 +77,14 @@ public class Vendor1Caller implements VendorCaller {
 
     @Override
     public Mono<JsonNode> streamAllCities(String keyword, String from) {
+        String url = null;
+        if (!ObjectUtils.isEmpty(from)) {
+            url = vendor1CitySearchEndpoint + "?keyword=" + keyword + "&from=" + from;
+        } else {
+            url = vendor1CitySearchEndpoint + "?keyword=" + keyword;
+        }
         return webClient.get()
-                .uri(vendor1CitySearchEndpoint + "?keyword=" + keyword + "&from=" + from)
+                .uri(url)
                 .retrieve()
                 .bodyToMono(String.class)
                 .map(response -> {

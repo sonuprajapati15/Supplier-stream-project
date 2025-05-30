@@ -1,4 +1,7 @@
 import { createElement as h, useState, useEffect } from "react";
+import "../css/theme-toggle.css"
+import "../css/variables.css"
+import "../css/index.css"
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState("dark");

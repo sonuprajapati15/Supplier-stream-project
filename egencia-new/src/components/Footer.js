@@ -1,4 +1,5 @@
 import { createElement as h } from "react";
+import "../css/Footer.css"; // Assuming you have a CSS file for styling
 
 export function Footer() {
   return h('footer', { className: "footer" }, [

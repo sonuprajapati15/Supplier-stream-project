@@ -1,5 +1,8 @@
 import { createElement as h } from "react";
 import { Link, useLocation } from "react-router-dom";
+import "../css/header.css";
+import "../css/theme-toggle.css"
+
 
 export function Header() {
   const location = useLocation();

@@ -1,5 +1,11 @@
 import { createElement as h, useState } from "react";
 import { FlightSearch } from "./FlightSearch";
+import "../css/theme-toggle.css"
+import "../css/home-page.css"
+import "../css/home-widgets.css"
+import "../css/tabs.css"
+import "../css/variables.css"
+import "../css/index.css"
 
 export function Home() {
   const [tab, setTab] = useState("flights");

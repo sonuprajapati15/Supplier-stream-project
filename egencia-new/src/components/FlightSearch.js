@@ -1,5 +1,12 @@
 import { createElement as h, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../css/flight-search.css";
+import "../css/theme-toggle.css"
+import "../css/home-page.css"
+import "../css/home-widgets.css"
+import "../css/tabs.css"
+import "../css/variables.css"
+import "../css/index.css"
 
 const tripTypes = ["One way", "Round trip", "Multi city"];
 const cabinClasses = ["Economy", "Business"];
@@ -14,17 +21,16 @@ export function FlightSearch() {
   const [toSuggestions, setToSuggestions] = useState([]);
   const navigate = useNavigate();
 
-  async function fetchCities(keyword, setSuggestions) {
+  async function fetchCities(keyword, setSuggestions, fromCity = "") {
     // Simulate API call
-    if (!keyword) return setSuggestions([]);
-    // Replace this with your actual fetch:
-    // let res = await fetch(`/supplier/stream/all/cities?keyword=${encodeURIComponent(keyword)}`);
-    // let data = await res.json();
-    // setSuggestions(data.cities);
-    setSuggestions([
-      keyword + " City 1",
-      keyword + " City 2"
-    ]);
+    if (!keyword && keyword.length > 2 && keyword.length < 20) return setSuggestions([]);
+    let suggestionUrl = `http://localhost:9000/supplier/stream/all/cities?keyword=${encodeURIComponent(keyword)}`
+    if(fromCity && keyword !== fromCity && fromCity.length> 2) {
+      suggestionUrl += `&from=${encodeURIComponent(fromCity)}`;
+    }
+    let res = await fetch(suggestionUrl);
+    let data = await res.json();
+    setSuggestions(data.cities);
   }
 
   function onSearch(e) {
@@ -60,11 +66,11 @@ export function FlightSearch() {
           value: from,
           onInput: e => {
             setFrom(e.target.value);
-            fetchCities(e.target.value, setFromSuggestions);
+            fetchCities(e.target.value, setFromSuggestions, "");
           },
           autoComplete: "off"
         }),
-        !!fromSuggestions.length && h('ul', { className: "suggestions" }, 
+        fromSuggestions.length > 0 && h('ul', { className: "suggestions" },
           fromSuggestions.map(s =>
             h('li', {
               key: s,
@@ -83,11 +89,11 @@ export function FlightSearch() {
           value: to,
           onInput: e => {
             setTo(e.target.value);
-            fetchCities(e.target.value, setToSuggestions);
+            fetchCities(e.target.value, setToSuggestions, from);
           },
           autoComplete: "off"
         }),
-        !!toSuggestions.length && h('ul', { className: "suggestions" }, 
+        toSuggestions.length > 0 && h('ul', { className: "suggestions" },
           toSuggestions.map(s =>
             h('li', {
               key: s,
