@@ -14,16 +14,17 @@ export function FlightSearch() {
   const [toSuggestions, setToSuggestions] = useState([]);
   const navigate = useNavigate();
 
-  async function fetchCities(keyword, setSuggestions, fromValue) {
+  async function fetchCities(keyword, setSuggestions) {
     // Simulate API call
-    if (!keyword && keyword.length >=2 && keyword.length > 10) return setSuggestions([]);
-    let fetchCityUrl = `http://localhost:9000/supplier/stream/all/cities?keyword=${encodeURIComponent(keyword)}`;
-    if(fromValue){
-      fetchCityUrl +=`&from=${encodeURIComponent(fromValue)}`;
-    }
-    let res = await fetch(fetchCityUrl);
-    let data = await res.json();
-    setSuggestions(data.cities);
+    if (!keyword) return setSuggestions([]);
+    // Replace this with your actual fetch:
+    // let res = await fetch(`/supplier/stream/all/cities?keyword=${encodeURIComponent(keyword)}`);
+    // let data = await res.json();
+    // setSuggestions(data.cities);
+    setSuggestions([
+      keyword + " City 1",
+      keyword + " City 2"
+    ]);
   }
 
   function onSearch(e) {
@@ -80,9 +81,9 @@ export function FlightSearch() {
           type: "text",
           placeholder: "Going to",
           value: to,
-          onInput: (e) => {
+          onInput: e => {
             setTo(e.target.value);
-            fetchCities(e.target.value, setToSuggestions, from);
+            fetchCities(e.target.value, setToSuggestions);
           },
           autoComplete: "off"
         }),

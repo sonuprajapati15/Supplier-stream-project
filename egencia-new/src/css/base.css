@@ -1,0 +1,44 @@
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f7f8fa;
+  color: #232733;
+  min-height: 100vh;
+}
+[data-theme="dark"] {
+  background: #1a202c;
+  color: #f7f8fa;
+}
+[data-theme="dark"] .header,
+[data-theme="dark"] .footer,
+[data-theme="dark"] .tab-content,
+[data-theme="dark"] .card, 
+[data-theme="dark"] .flight-result,
+[data-theme="dark"] .listing-search-bar,
+[data-theme="dark"] .upcoming-trips,
+[data-theme="dark"] .recommended {
+  background: #222733 !important;
+  color: #f7f8fa !important;
+}
+[data-theme="dark"] .tab-btn.active { background: #0069c2 !important; color: #fff !important; }
+[data-theme="dark"] .tab-btn { background: #232834 !important; color: #cfd8e3 !important; }
+[data-theme="dark"] .input-autocomplete input, 
+[data-theme="dark"] .listing-search-bar input, 
+[data-theme="dark"] .listing-search-bar select { background: #232834; color: #f7f8fa; border-color: #3a4252; }
+[data-theme="dark"] .flight-result { border-color: #33384b; }
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: inherit;
+}
+.main-content {
+  flex: 1; padding: 36px 0 36px 0;
+  background: inherit;
+}
+@media (max-width: 900px) {
+  .main-content, .home-page, .listing-page, .trips-page, .booking-page { padding: 10px 0; }
+  .header-inner, .footer-inner, .home-page, .listing-page { max-width: 100vw !important; }
+}

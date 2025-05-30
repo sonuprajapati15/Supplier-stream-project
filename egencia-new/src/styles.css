@@ -33,7 +33,7 @@ body, html, #root {
 [data-theme="dark"] .header,
 [data-theme="dark"] .footer,
 [data-theme="dark"] .tab-content,
-[data-theme="dark"] .card,
+[data-theme="dark"] .card, 
 [data-theme="dark"] .flight-result,
 [data-theme="dark"] .listing-search-bar,
 [data-theme="dark"] .upcoming-trips,
@@ -43,8 +43,8 @@ body, html, #root {
 }
 [data-theme="dark"] .tab-btn.active { background: #0069c2 !important; color: #fff !important; }
 [data-theme="dark"] .tab-btn { background: #232834 !important; color: #cfd8e3 !important; }
-[data-theme="dark"] .input-autocomplete input,
-[data-theme="dark"] .listing-search-bar input,
+[data-theme="dark"] .input-autocomplete input, 
+[data-theme="dark"] .listing-search-bar input, 
 [data-theme="dark"] .listing-search-bar select { background: #232834; color: #f7f8fa; border-color: #3a4252; }
 [data-theme="dark"] .flight-result { border-color: #33384b; }
 

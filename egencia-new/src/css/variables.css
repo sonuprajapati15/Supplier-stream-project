@@ -1,0 +1,19 @@
+:root {
+  --primary: #0069c2;
+  --primary-light: #e7f2fa;
+  --accent: #ffe869;
+  --accent-bg: #fffbe6;
+  --tab-active: #0069c2;
+  --tab-bg: #f5f8fa;
+  --tab-border: #d5e0ea;
+  --header-shadow: 0 2px 6px #0001;
+  --card-shadow: 0 2px 8px #0001;
+  --input-border: #c8d3de;
+  --input-focus: #0069c2;
+  --nav-link: #232733;
+  --nav-link-active: #0069c2;
+  --footer-bg: #f7f8fa;
+  --footer-text: #7a7e87;
+  --footer-link: #232733;
+  --footer-link-hover: #0069c2;
+}

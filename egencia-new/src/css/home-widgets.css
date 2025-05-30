@@ -1,0 +1,42 @@
+.home-widgets {
+  display: flex; gap: 26px; margin-top: 38px;
+}
+.upcoming-trips, .recommended {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  padding: 18px 22px;
+  min-width: 260px;
+}
+.upcoming-trips h2, .recommended h2 { font-size: 1.07em; margin-bottom: 8px; }
+.trip-cards { display: flex; gap: 16px; }
+.trip-card {
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 1px 8px #0001;
+  padding: 7px 7px 8px 7px;
+  flex: 1 1 120px;
+  min-width: 120px; max-width: 140px;
+  text-align: left;
+  font-size: 0.96em;
+}
+.trip-card img {
+  width: 100%; border-radius: 5px; height: 62px; object-fit: cover;
+  margin-bottom: 7px;
+}
+.trip-card strong { display: block; color: #232733; margin-bottom: 2px; }
+.trip-card button {
+  background: var(--primary-light); color: var(--primary);
+  border: none; border-radius: 5px; padding: 4px 10px;
+  font-size: 0.96em; margin-top: 5px; cursor: pointer;
+}
+.trip-card button:hover { background: #cbe7fa; }
+.recommendation {
+  display: flex; align-items: flex-start; margin-bottom: 12px; gap: 10px;
+}
+.rec-icon {
+  font-size: 1.42em; margin-top: 2px;
+}
+.recommendation strong { color: #232733; }
+.recommendation a { color: var(--primary); text-decoration: underline; font-weight: 500; }
+.recommendation a:hover { text-decoration: none; }
