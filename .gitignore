@@ -35,3 +35,6 @@ build/
 /new-stream-ui/dist/
 /flight-stream-ui/dist/
 /flight-stream-ui/node_modules/
+/egencia-new/node_modules/
+/egencia-new/dist/
+/egencia-new/package-lock.json
