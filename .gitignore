@@ -38,3 +38,5 @@ build/
 /egencia-new/node_modules/
 /egencia-new/dist/
 /egencia-new/package-lock.json
+/egencia-app/node_modules/
+/egencia-app/dist/
