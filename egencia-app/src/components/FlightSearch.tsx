@@ -202,7 +202,6 @@ const FlightSearch: React.FC = () => {
                     <div className="fs-card">
                         <div className="fs-card-icon">{icons.calendar}</div>
                         <div className="fs-card-content">
-                            {displayLabel(date, "Date")}
                             <input
                                 type="date"
                                 value={date}
