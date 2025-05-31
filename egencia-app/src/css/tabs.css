@@ -1,0 +1,32 @@
+.tabs {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+}
+.tab-btn {
+  background: #e6f0fa;
+  border: none;
+  border-radius: 22px;
+  color: #0059b2;
+  font-weight: 500;
+  font-size: 1.02rem;
+  padding: 0.5rem 1.3rem;
+  margin: 0 0.1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.tab-btn.active, .tab-btn:focus, .tab-btn:hover {
+  background: #0059b2;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .tabs {
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+  .tab-btn {
+    padding: 0.45rem 0.8rem;
+    font-size: 0.99rem;
+  }
+}

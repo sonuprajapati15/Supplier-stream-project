@@ -3,7 +3,7 @@
   color: var(--footer-text);
   font-size: 0.95em;
   padding: 30px 0 15px 0;
-  margin-top: auto;
+  margin-bottom: 30px;
   box-shadow: 0 -2px 8px #0001;
 }
 .footer-inner {

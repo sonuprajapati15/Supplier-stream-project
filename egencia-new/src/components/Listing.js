@@ -70,30 +70,47 @@ export function Listing() {
         ]),
         h('div', {className: "flight-results"},
             results.map(flight =>
-                h('div', {key: flight._id, className: "flight-card"}, [
-                    h('div', {className: "flight-header"}, [
-                        h('img', {src: flight.airline.logo, alt: flight.airline.name, className: "airline-logo"}),
-                        h('span', {className: "airline-name"}, flight.airline.name),
-                        h('span', {className: "flight-number"}, `Flight: ${flight.flightNumber}`)
+                h('div', { key: flight._id, className: "flight-card" }, [
+                    h('div', { className: "flight-header" }, [
+                        h('img', { src: flight.airline.logo, alt: flight.airline.name, className: "airline-logo" }),
+                        h('span', { className: "airline-name" }, flight.airline.name),
+                        h('span', { className: "flight-number" }, `Flight: ${flight.flightNumber}`)
                     ]),
-                    h('div', {className: "flight-details"}, [
-                        h('div', {className: "flight-route"}, [
+                    h('div', { className: "flight-details" }, [
+                        h('div', { className: "flight-route" }, [
                             h('span', {}, `From: ${flight.from}`),
                             h('span', {}, `To: ${flight.to}`)
                         ]),
-                        h('div', {className: "flight-times"}, [
+                        h('div', { className: "flight-times" }, [
                             h('span', {}, `Departure: ${flight.departureTime}`),
                             h('span', {}, `Arrival: ${flight.arrivalTime}`)
                         ]),
-                        h('div', {className: "flight-duration"}, `Duration: ${flight.duration}`),
-                        h('div', {className: "flight-price"}, `Price: ₹${flight.price}`)
+                        h('div', { className: "flight-duration" }, `Duration: ${flight.duration}`),
+                        h('div', { className: "flight-price" }, `Base Price: ₹${flight.price}`)
                     ]),
-                    h('div', {className: "flight-extras"}, [
-                        h('span', {}, `Cabin Class: ${flight.cabinClass}`),
-                        h('span', {}, `Baggage: ${flight.baggage}`),
-                        h('span', {}, `Meal: ${flight.meal}`),
-                        h('span', {}, `Stops: ${flight.totalStops}`)
-                    ])
+                    h('div', { className: "fare-categories" },
+                        flight.fareCategories.map(category =>
+                            h('div', { key: category.fareType, className: "fare-category" }, [
+                                h('h3', {}, category.fareType),
+                                h('div', { className: "fare-options" },
+                                    category.fareOptions.map(option =>
+                                        h('div', { key: option.total_price, className: "fare-option" }, [
+                                            h('div', { className: "fare-components" }, [
+                                                h('span', {}, `Baggage: ${option.components?.baggage_options?.name}`),
+                                                h('span', {}, `Cabin Class: ${option.components?.cabin_classes?.name}`),
+                                                h('span', {}, `Seat Type: ${option.components?.seat_types?.name}`),
+                                                h('span', {}, `Fare Class: ${option.components?.fare_classes?.name}`),
+                                                h('span', {}, `Cancellation Policy: ${option.components?.cancellation_policies?.name || "N/A"}`),
+                                                h('span', {}, `Change Policy: ${option.components?.change_policies?.name || "N/A"}`),
+                                                h('span', {}, `WiFi: ${option.components?.wifi_availability?.name || "N/A"}`)
+                                            ]),
+                                            h('div', { className: "fare-price" }, `Total Price: ₹${option.total_price}`)
+                                        ])
+                                    )
+                                )
+                            ])
+                        )
+                    )
                 ])
             )
         )

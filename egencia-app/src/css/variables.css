@@ -1,0 +1,12 @@
+:root {
+  --color-primary: #0059b2;
+  --color-primary-light: #e6f0fa;
+  --color-bg: #f8f9fb;
+  --color-text: #222;
+  --color-accent: #003366;
+  --color-link: #0059b2;
+  --color-link-hover: #003366;
+  --border-radius: 8px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --max-width: 1200px;
+}

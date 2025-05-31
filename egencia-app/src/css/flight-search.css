@@ -1,0 +1,259 @@
+.fs-box {
+  background: #fffbe6;
+  border-radius: 12px;
+  border: 1.5px solid #f8f2f2;
+  padding: 1.2rem 1rem 1.8rem 1rem;
+  margin: 1.5rem 0;
+  box-shadow: 0 2px 16px 0 rgba(80,90,150,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.fs-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.fs-chip-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.fs-chip {
+  appearance: none;
+  border: 1.5px solid #bdc7d4;
+  background: #fff;
+  color: #172547;
+  border-radius: 24px;
+  font-size: 1.04rem;
+  font-weight: 500;
+  padding: 0.6rem 1.4rem;
+  margin: 0;
+  min-width: 120px;
+  outline: none;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.fs-chip:focus, .fs-chip:hover {
+  border: 1.5px solid #2663d7;
+  box-shadow: 0 0 0 2px #e3ecfa;
+}
+
+.fs-chip-link {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #2663d7;
+  font-size: 1.05rem;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  min-width: unset;
+  gap: 0.5rem;
+}
+.fs-chip-link svg {
+  margin-right: 0.2rem;
+}
+
+.fs-card-group {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  flex: 1 1 0%;
+  min-width: 0;
+}
+
+.fs-card {
+  background: #fff;
+  border: 1.5px solid #bdc7d4;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  min-width: 220px;
+  min-height: 56px;
+  padding: 0.6rem 1.1rem;
+  position: relative;
+  flex: 1 1 0%;
+  box-sizing: border-box;
+  gap: 0.7rem;
+  transition: border 0.2s;
+}
+
+.fs-card:focus-within, .fs-card:hover {
+  border: 1.5px solid #2663d7;
+  box-shadow: 0 2px 8px 0 #e3ecfa;
+}
+
+.fs-card-icon {
+  margin-right: 0.2rem;
+  display: flex;
+  align-items: center;
+  min-width: 30px;
+  justify-content: center;
+}
+
+.fs-card-content {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.fs-label {
+  font-size: 0.96rem;
+  color: #6b7480;
+  margin-bottom: 0.09rem;
+}
+
+.fs-card input[type="text"], .fs-card input[type="date"], .fs-select {
+  border: none;
+  font-size: 1.12rem;
+  color: #172547;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  font-weight: 500;
+  width: 100%;
+  max-width: 100%;
+}
+
+.fs-card input[type="date"] {
+  color: #172547;
+  font-weight: 500;
+  font-size: 1.15rem;
+  background: none;
+  cursor: pointer;
+}
+
+.fs-date-value {
+  font-size: 1.13rem;
+  color: #172547;
+  font-weight: 500;
+  margin-top: 0.08rem;
+}
+
+.fs-swap {
+  background: #fff;
+  border: 1.5px solid #bdc7d4;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 0 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  top: 14px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.fs-swap:focus, .fs-swap:hover {
+  border: 1.5px solid #2663d7;
+  box-shadow: 0 0 0 2px #e3ecfa;
+  background: #f5f8fc;
+}
+
+.input-autocomplete {
+  position: relative;
+  flex: 1 1 0%;
+}
+
+.fs-suggestions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: 100;
+  background: #fff;
+  border: 1px solid #e3ecfa;
+  box-shadow: 0 2px 12px rgba(80,90,150,0.09);
+  border-radius: 0 0 10px 10px;
+  max-height: 220px;
+  overflow-y: auto;
+  margin-top: 2px;
+  list-style: none;
+  padding: 0;
+}
+
+.fs-suggestions li {
+  padding: 0.7rem 1.1rem;
+  font-size: 1.08rem;
+  color: #172547;
+  cursor: pointer;
+  transition: background 0.17s;
+  background: #fff;
+  border-bottom: 1px solid #f4f4f4;
+}
+.fs-suggestions li:last-child {
+  border-bottom: none;
+}
+.fs-suggestions li:hover, .fs-suggestions li:active {
+  background: #f5f8fc;
+  color: #2663d7;
+}
+
+.fs-search-btn {
+  margin-left: 3rem;
+  background: #2663d7;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 11px;
+  padding: 1.1rem 2.1rem;
+  cursor: pointer;
+  align-self: flex-end;
+  min-width: 170px;
+  box-shadow: 0 2px 12px 0 rgba(38,99,215,0.04);
+  transition: background 0.18s, box-shadow 0.18s;
+}
+
+.fs-search-btn:hover, .fs-search-btn:focus {
+  background: #1743a9;
+  box-shadow: 0 4px 20px 0 rgba(38,99,215,0.12);
+}
+
+@media (max-width: 1200px) {
+  .fs-card-group {
+    flex-wrap: wrap;
+    gap: 0.5rem 0.6rem;
+  }
+  .fs-card, .input-autocomplete {
+    min-width: 180px;
+  }
+  .fs-search-btn {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 1.4rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .fs-box {
+    padding: 0.7rem 0.4rem 1.4rem 0.4rem;
+  }
+  .fs-row {
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .fs-chip-group {
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  .fs-card-group {
+    flex-wrap: wrap;
+  }
+  .fs-search-btn {
+    margin-left: 0;
+    width: 100%;
+    margin-top: 1.4rem;
+  }
+}

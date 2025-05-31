@@ -1,0 +1,41 @@
+/* Global overrides & resets */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4 {
+  color: var(--color-primary);
+}
+
+a {
+  color: var(--color-link);
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--color-link-hover);
+}
+
+.app-outer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.5rem 0.7rem 2.5rem 0.7rem;
+}
+
+@media (max-width: 700px) {
+  main {
+    padding: 1rem 0.3rem 1.5rem 0.3rem;
+  }
+}

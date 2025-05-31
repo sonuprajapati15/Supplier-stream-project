@@ -1,0 +1,10 @@
+/* Styles for other pages (placeholder, extend as needed) */
+.page {
+  padding: 2rem 0.7rem;
+  background: #f8f9fb;
+  min-height: 60vh;
+}
+.page h2 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
