@@ -1,5 +1,34 @@
+.fs-required {
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 1.2rem;
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  z-index: 2;
+  background: #fff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fs-invalid input[type="text"],
+.fs-invalid input[type="date"] {
+  border: 2px solid #e74c3c !important;
+  border-radius: 4px;
+  background: #fff6f6;
+}
+
+.fs-invalid.fs-card-calender {
+  border-color: #e74c3c !important;
+}
+
 .fs-box {
   width: 100%;
+  height: 100%;
   max-width: 1200px;
   height: 100%;
   display: flex;
@@ -8,23 +37,30 @@
   align-items: center;
   padding: 2rem;
   box-sizing: border-box;
-  background: #fff;
+  background: #fcfaf7;
   border-radius: 10px;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
 }
 
-.fs-row {
+.fs-row-input {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 1.2rem;
+  margin-top: 20px;
   flex-wrap: wrap;
+}
+
+.fs-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
 }
 
 .fs-chip-group {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 1rem;
 }
 
@@ -36,12 +72,13 @@
   border-radius: 24px;
   font-size: 1.04rem;
   font-weight: 500;
-  padding: 0.6rem 1.4rem;
-  margin: 0;
+  padding: 0.6rem 1rem;
   min-width: 120px;
   outline: none;
   cursor: pointer;
   transition: border 0.2s, box-shadow 0.2s;
+  align-self: flex-start;
+  margin-left: 0;
 }
 
 .fs-chip:focus, .fs-chip:hover {
@@ -57,6 +94,7 @@
   color: #2663d7;
   font-size: 1.05rem;
   font-weight: 500;
+  margin-left: auto;
   padding: 0.6rem 1.2rem;
   min-width: unset;
   gap: 0.5rem;
@@ -67,7 +105,8 @@
 
 .fs-card-group {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: flex-start;
   gap: 0.5rem;
   flex: 1 1 0%;
   min-width: 0;
@@ -79,13 +118,45 @@
   border-radius: 14px;
   display: flex;
   align-items: center;
-  min-width: 220px;
-  min-height: 56px;
+  min-width: 150px;
+  min-height: 40px;
   padding: 0.6rem 1.1rem;
   position: relative;
   flex: 1 1 0%;
   box-sizing: border-box;
-  gap: 0.7rem;
+  gap: 0.6rem;
+  transition: border 0.2s;
+}
+
+.fs-card-other {
+  background: #fff;
+  border: 1.5px solid #bdc7d4;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  min-width: 150px;
+  min-height: 38px;
+  padding: 0.6rem .5rem;
+  position: relative;
+  flex: 1 1 0%;
+  box-sizing: border-box;
+  gap: 0.6rem;
+  transition: border 0.2s;
+}
+
+.fs-card-calender {
+  background: #fff;
+  border: 1.5px solid #bdc7d4;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  min-width: 150px;
+  min-height: 40px;
+  padding: 0.6rem 1.1rem;
+  position: relative;
+  flex: 1 1 0%;
+  box-sizing: border-box;
+  gap: 0.6rem;
   transition: border 0.2s;
 }
 
@@ -106,6 +177,16 @@
   display: flex;
   flex-direction: column;
   width: 70%;
+  padding-left: 2px;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.fs-card-content-cal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 2px;
   gap: 0.15rem;
   min-width: 0;
 }
@@ -155,7 +236,6 @@
   justify-content: center;
   cursor: pointer;
   position: relative;
-  top: 14px;
   transition: border 0.2s, box-shadow 0.2s;
 }
 .fs-swap:focus, .fs-swap:hover {
@@ -175,14 +255,14 @@
   right: 0;
   top: 100%;
   z-index: 100;
-  background: #fff;
-  border: 1px solid #e3ecfa;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid #ffffff;
   box-shadow: 0 2px 12px rgba(80,90,150,0.09);
   border-radius: 0 0 10px 10px;
-  max-height: 220px;
+  max-height: 350px;
   overflow-y: auto;
   margin-top: 2px;
-  list-style: none;
+  list-style: initial;
   padding: 0;
 }
 
@@ -192,7 +272,7 @@
   color: #172547;
   cursor: pointer;
   transition: background 0.17s;
-  background: #fff;
+  background: #faebcb;
   border-bottom: 1px solid #f4f4f4;
 }
 .fs-suggestions li:last-child {
@@ -207,14 +287,19 @@
   margin-left: 2.4rem;
   background: #2663d7;
   color: #fff;
-  font-size: 1.1rem;
+  margin-top: 15px;
+  margin-right: 85px;
+  font-size: 1rem;
   font-weight: 500;
   border: none;
   border-radius: 11px;
   padding: 1.1rem 2.1rem;
   cursor: pointer;
+  text-align: center;
+  display: flex;
   align-self: flex-end;
-  min-width: 170px;
+  min-width: 150px;
+  max-height: 50px;
   box-shadow: 0 2px 12px 0 rgba(38,99,215,0.04);
   transition: background 0.18s, box-shadow 0.18s;
 }
@@ -224,7 +309,7 @@
   box-shadow: 0 4px 20px 0 rgba(38,99,215,0.12);
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1000px) {
   .fs-card-group {
     flex-wrap: wrap;
     gap: 0.5rem 0.6rem;
@@ -259,4 +344,39 @@
     width: 100%;
     margin-top: 1.4rem;
   }
+}
+
+.fs-date-input {
+  border: none;
+  font-size: 1.15rem;
+  color: #172547;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 500;
+  width: 100%;
+  max-width: 100%;
+  appearance: none; /* Hides the default calendar icon */
+}
+
+.fs-date-input::-webkit-calendar-picker-indicator {
+  display: none; /* Hides the default calendar icon in WebKit browsers */
+}
+
+.fs-date-value {
+  font-size: 1.13rem;
+  color: #172547;
+  font-weight: 500;
+  margin-top: 0.08rem;
+}
+
+.fs-validation-alert {
+  color: #e74c3c;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: right;
+  width: 100%;
+  padding-right: 2.5rem;
 }

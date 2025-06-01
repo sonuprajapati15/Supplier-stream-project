@@ -52,7 +52,7 @@ public class StreamExecutor {
     }
 
     public Flux<String> streamSearchFlights(String from, String to) {
-        return Flux.range(1, 10)
+        return Flux.range(1, 5)
             .concatMap(page ->
                 Flux.fromIterable(vendorCallers)
                     .concatMap(vendor -> vendor.fetchSearchFlights(from, to, page)

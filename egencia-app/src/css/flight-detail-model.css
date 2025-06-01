@@ -1,0 +1,82 @@
+.flight-details-modal-overlay {
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background: rgba(10, 30, 55, 0.26);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 2.5rem;
+}
+.flight-details-modal {
+    position: relative;
+    background: #fff;
+    width: 800px;
+    max-width: 95vw;
+    border-radius: 13px;
+    box-shadow: 0 8px 32px 0 rgba(60,90,120,0.19);
+    padding-bottom: 1.2rem;
+    animation: modal-fadein 0.18s;
+}
+@keyframes modal-fadein {
+    from { transform: translateY(-22px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+.flight-details-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1.5px solid #e6e8ec;
+    padding: 1.1rem 1.7rem 0.9rem 1.7rem;
+    font-size: 1.21rem;
+    font-weight: 600;
+    color: #253050;
+}
+.flight-details-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #59677a;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.14s;
+}
+.flight-details-close-btn:hover { color: #2663d7; }
+
+.flight-details-modal-content {
+    padding: 1.6rem 2.1rem 1.2rem 2.1rem;
+    position: relative;
+}
+.flight-details-summary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.flight-airline-logo {
+    width: 140px;
+    height: 90px;
+    border-radius: 90%;
+}
+.flight-detail-columns {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+.flight-details-features,
+.flight-details-additional {
+    flex: 1;
+}
+.flight-details-features h4,
+.flight-details-additional h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    color: #253050;
+}
+.flight-details-features p,
+.flight-details-additional p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #4b5570;
+}

@@ -1,6 +1,6 @@
 import React, {useState, useRef} from "react";
 import {useNavigate} from "react-router-dom";
-import "../css/flight-search.css";
+import "../../css/flight-search.css";
 
 const tripTypes = ["One way", "Round trip", "Multi city"];
 const cabinClasses = ["Economy", "Business"];
@@ -50,16 +50,28 @@ const icons = {
 };
 
 const FlightSearch: React.FC = () => {
+    const toggleCalendar = () => {
+        setIsCalendarVisible(!isCalendarVisible);
+    };
     const [tripType, setTripType] = useState<string>(tripTypes[0]);
     const [cabin, setCabin] = useState<string>(cabinClasses[0]);
     const [from, setFrom] = useState<string>("");
     const [to, setTo] = useState<string>("");
-    const [date, setDate] = useState<string>("");
     const [depart, setDepart] = useState<string>(departTimes[0]);
     const [fromSuggestions, setFromSuggestions] = useState<string[]>([]);
     const [toSuggestions, setToSuggestions] = useState<string[]>([]);
     const [fromFocused, setFromFocused] = useState(false);
     const [toFocused, setToFocused] = useState(false);
+    const [isCalendarVisible, setIsCalendarVisible] = useState(false);
+    const [date, setDate] = useState<string>("");
+
+    // Validation state
+    const [validation, setValidation] = useState<{
+        from?: string;
+        to?: string;
+        date?: string;
+        alert?: string;
+    }>({});
 
     const navigate = useNavigate();
     const fromInputRef = useRef<HTMLInputElement>(null);
@@ -98,14 +110,45 @@ const FlightSearch: React.FC = () => {
 
     const onSearch = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        navigate(
-            `/listing?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&date=${encodeURIComponent(date)}&tripType=${encodeURIComponent(tripType)}&cabin=${encodeURIComponent(cabin)}&depart=${encodeURIComponent(depart)}`
-        );
-    };
+        let newValidation: typeof validation = {};
 
-    const displayLabel = (value: string, placeholder: string) => (
-        <span className="fs-label">{placeholder}</span>
-    );
+        // Validate fields
+        if (!from || from.length < 3) {
+            newValidation.from = "Required";
+            newValidation.alert = "Please fill in Leaving From field.";
+        }
+        if (!to || to.length < 3) {
+            newValidation.to = "Required";
+            newValidation.alert = "Please fill in Going To field.";
+        }
+        if (from === to) {
+            newValidation.from = "Required";
+            newValidation.to = "Required";
+            newValidation.alert = "Leaving From and Going To cannot be the same.";
+        }
+        if (!date || date.length < 10 || date.length > 10 || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+            newValidation.date = "Required";
+            newValidation.alert = "Please enter a valid date in the format YYYY-MM-DD.";
+        } else if (new Date(date) < new Date()) {
+            newValidation.date = "Required";
+            newValidation.alert = "Date cannot be in the past.";
+        } else if (new Date(date) > new Date(new Date().setFullYear(new Date().getFullYear() + 1))) {
+            newValidation.date = "Required";
+            newValidation.alert = "Date cannot be more than 1 year in the future.";
+        }
+
+        setValidation(newValidation);
+
+        if (Object.keys(newValidation).length > 0) {
+            // Don't proceed if there are validation errors
+            return;
+        }
+
+        navigate(
+            `/flight/listing?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&date=${encodeURIComponent(date)}&tripType=${encodeURIComponent(tripType)}&cabin=${encodeURIComponent(cabin)}&depart=${encodeURIComponent(depart)}`
+        );
+        window.location.reload();
+    };
 
     return (
         <form className="fs-box" onSubmit={onSearch} autoComplete="off">
@@ -121,14 +164,14 @@ const FlightSearch: React.FC = () => {
                             <option value={type} key={type}>{type}</option>
                         ))}
                     </select>
-                    <button type="button" className="fs-chip fs-chip-link">
-                        {icons.user} <span>My travel info</span>
-                    </button>
                 </div>
+                <button type="button" className="fs-chip fs-chip-link">
+                    {icons.user} <span>My travel info</span>
+                </button>
             </div>
-            <div className="fs-row">
+            <div className="fs-row-input">
                 <div className="fs-card-group">
-                    <div className="fs-card input-autocomplete">
+                    <div className={`fs-card input-autocomplete${validation.from ? " fs-invalid" : ""}`}>
                         <div className="fs-card-icon">{icons.plane}</div>
                         <div className="fs-card-content">
                             <input
@@ -141,6 +184,7 @@ const FlightSearch: React.FC = () => {
                                 onChange={(e) => {
                                     setFrom(e.target.value);
                                     fetchCities(e.target.value, setFromSuggestions, "");
+                                    if (validation.from) setValidation(v => ({ ...v, from: undefined, alert: undefined }));
                                 }}
                                 autoComplete="off"
                             />
@@ -161,12 +205,13 @@ const FlightSearch: React.FC = () => {
                                 </ul>
                             )}
                         </div>
+                        {validation.from && <span className="fs-required">*</span>}
                     </div>
                     <button type="button" className="fs-swap" tabIndex={-1} aria-label="Swap cities"
                             onClick={swapCities}>
                         {icons.swap}
                     </button>
-                    <div className="fs-card input-autocomplete">
+                    <div className={`fs-card input-autocomplete${validation.to ? " fs-invalid" : ""}`}>
                         <div className="fs-card-icon">{icons.plane}</div>
                         <div className="fs-card-content">
                             <input
@@ -179,6 +224,7 @@ const FlightSearch: React.FC = () => {
                                 onChange={(e) => {
                                     setTo(e.target.value);
                                     fetchCities(e.target.value, setToSuggestions, from);
+                                    if (validation.to) setValidation(v => ({ ...v, to: undefined, alert: undefined }));
                                 }}
                                 autoComplete="off"
                             />
@@ -198,30 +244,38 @@ const FlightSearch: React.FC = () => {
                                 </ul>
                             )}
                         </div>
+                        {validation.to && <span className="fs-required">*</span>}
                     </div>
-                    <div className="fs-card">
+                    <div className={`fs-card-calender${validation.date ? " fs-invalid" : ""}`} onClick={toggleCalendar}>
                         <div className="fs-card-icon">{icons.calendar}</div>
-                        <div className="fs-card-content">
-                            <input
-                                type="date"
-                                value={date}
-                                onChange={e => setDate(e.target.value)}
-                                className="fs-date-input"
-                            />
-                            {date && (
-                                <span className="fs-date-value">
-                  {new Date(date).toLocaleDateString(undefined, {
-                      month: "short",
-                      day: "numeric"
-                  })}
-                </span>
+                        <div className="fs-card-content-cal">
+                            {isCalendarVisible ? (
+                                <input
+                                    type="date"
+                                    value={date}
+                                    onChange={(e) => {
+                                        setDate(e.target.value);
+                                        if (validation.date) setValidation(v => ({ ...v, date: undefined, alert: undefined }));
+                                    }}
+                                    className="fs-date-input"
+                                    onClick={(e) => e.stopPropagation()} // Prevent parent click event
+                                />
+                            ) : (
+                                <span className="fs-date-value" onClick={(e) => e.stopPropagation()}>
+                                    {date
+                                        ? new Date(date).toLocaleDateString(undefined, {
+                                            month: "short",
+                                            day: "numeric",
+                                        })
+                                        : "Select a date"}
+                                </span>
                             )}
                         </div>
+                        {validation.date && <span className="fs-required">*</span>}
                     </div>
-                    <div className="fs-card">
+                    <div className="fs-card-other">
                         <div className="fs-card-icon">{icons.clock}</div>
                         <div className="fs-card-content">
-                            {displayLabel(depart, "Depart")}
                             <select className="fs-select" value={depart} onChange={e => setDepart(e.target.value)}>
                                 {departTimes.map((d) => (
                                     <option value={d} key={d}>{d}</option>
@@ -230,10 +284,15 @@ const FlightSearch: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <button type="submit" className="fs-search-btn">
-                    Search flights
-                </button>
             </div>
+            {validation.alert && (
+                <div className="fs-validation-alert">
+                    {validation.alert}
+                </div>
+            )}
+            <button type="submit" className="fs-search-btn">
+                Search Flights
+            </button>
         </form>
     );
 };

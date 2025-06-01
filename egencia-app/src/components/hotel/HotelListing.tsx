@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/listing.css";
+import "../../css/flight-listing.css";
 
 const listings = [
   {
@@ -13,7 +13,7 @@ const listings = [
   // Add more listings as needed
 ];
 
-const Listing: React.FC = () => (
+const HotelListing: React.FC = () => (
   <div className="listing-page">
     <h2>Hotel Listings</h2>
     <div className="listings-grid">
@@ -33,4 +33,4 @@ const Listing: React.FC = () => (
   </div>
 );
 
-export default Listing;
+export default HotelListing;

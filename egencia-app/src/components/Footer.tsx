@@ -20,15 +20,6 @@ const Footer: React.FC = () => (
         <div className="footer-legal">
             © 2025 GBT Travel Services UK Limited
         </div>
-        <div className="footer-smallprint">
-            GBT Travel Services UK Limited (GBT UK) and its authorized sublicensees (including Ovation Travel Group and
-            Egencia) use certain trademarks and service marks of American Express Company or its subsidiaries (American
-            Express) in the “American Express Global Business Travel” and “American Express GBT Meetings & Events”
-            brands and in connection with its business for permitted uses only under a limited license from American
-            Express (Licensed Marks). The Licensed Marks are trademarks or service marks of, and the property of,
-            American Express. GBT UK is a subsidiary of Global Business Travel Group, Inc. (NYSE: GBTG). American
-            Express holds a minority interest in GBTG, which operates as a separate company from American Express.
-        </div>
     </footer>
 );
 
