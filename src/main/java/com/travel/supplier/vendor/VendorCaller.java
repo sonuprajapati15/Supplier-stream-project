@@ -1,6 +1,7 @@
 package com.travel.supplier.vendor;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.travel.supplier.BookingBo;
 import reactor.core.publisher.Mono;
 
 public interface VendorCaller {
@@ -10,5 +11,6 @@ public interface VendorCaller {
     String fetchAllBookings(String userId);
     Mono<JsonNode> fetchSearchFlights(String from, String to, Integer page);
     Mono<JsonNode> streamAllCities(String keyword, String from);
+    Mono<JsonNode> makeBooking(BookingBo booking);
 }
 

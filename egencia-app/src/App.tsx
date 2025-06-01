@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Home from "./components/Home";
 import HotelListing from "./components/hotel/HotelListing";
 import FlightListing from "./components/flight/FlightListing";
+import FlightCheckoutPage from "./components/checkout/FlightCheckout";
 // import Trips from "./components/Trips"; // add when you migrate Trips
 
 const App: React.FC = () => (
@@ -15,6 +16,7 @@ const App: React.FC = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/flight/listing" element={<FlightListing />} />
+          <Route path="/checkout/flight" element={<FlightCheckoutPage />} />
           <Route path="/hotel/listing" element={<HotelListing />} />
           {/* <Route path="/trips" element={<Trips />} /> */}
           {/* Add more routes as you migrate more components */}

@@ -99,7 +99,11 @@ const FlightCard: React.FC<{
                                                                     <span className="flight-fare-category-price">
                                                                         ₹{fare.total_price.toLocaleString()}
                                                                     </span>
-                                        <button className="flight-fare-category-select">Select</button>
+                                        <button
+                                            className="flight-fare-category-select"
+                                            onClick={() => window.location.href = `/checkout/flight?flightId=${flight.flightId}&fareType=${fc.fareType}&fareId=${i}&provider=${flight.vendor_name}`}>
+                                            Select
+                                        </button>
                                     </div>
                                     <div className="image-section">
                                         <img src={fc.image} className="centered-image"/>

@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, {useState, useEffect, useRef, useCallback} from "react";
 import FlightSearch from "./FlightSearch";
 import FlightCard from "./FlightCard";
 import "../../css/flight-listing.css";
 import ProgressBar from "../progess-bar/ProgressBar";
 
 // @ts-ignore
-import { decryptAndDecompress } from '../../decrypt/decryptAndDecompress';
+import {decryptAndDecompress} from '../../decrypt/decryptAndDecompress';
 
 const sortOptions = ["Smart Mix", "Price Low to High", "Price High to Low"];
 
 const fareTabs = [
-    { key: "Saver", label: "Saver", desc: "Essential Only" },
-    { key: "Popular", label: "Popular", desc: "Most Popular" },
-    { key: "Premium", label: "Premium", desc: "Maximum Flexible & Comfort" }
+    {key: "Saver", label: "Saver", desc: "Essential Only"},
+    {key: "Popular", label: "Popular", desc: "Most Popular"},
+    {key: "Premium", label: "Premium", desc: "Maximum Flexible & Comfort"}
 ];
 
 function flattenFareOptions(fareOptions: any[]): any[] {
@@ -35,42 +35,53 @@ function getMinFare(flight: any, category: string) {
     return fares.reduce((min, f) => f.total_price < min.total_price ? f : min, fares[0]);
 }
 
-const sortByPriceAsc = (flights: any[]) => {
+const sortByPriceAsc = (flights: any[], asc=true) => {
     // Sort by lowest price in "Popular" (Recommended) fare category
     return [...flights].sort((a, b) => {
         const aFare = getMinFare(a, "Recommended");
         const bFare = getMinFare(b, "Recommended");
         const aPrice = aFare ? aFare.total_price : Number.MAX_VALUE;
         const bPrice = bFare ? bFare.total_price : Number.MAX_VALUE;
-        return aPrice - bPrice;
+        return asc ? aPrice - bPrice : bPrice - aPrice;
     });
 };
 
 const FlightListing: React.FC = () => {
     const [selectedFareTab, setSelectedFareTab] = useState("Popular");
-    const [selectedFlight, setSelectedFlight] = useState<string | null>(null);
     const [flights, setFlights] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
     const [filterOptions, setFilterOptions] = useState<{ key: string; values: string[] }[]>([
-        { key: "Airlines", values: [] }
+        {key: "Airlines", values: []}
     ]);
     const [showScrollToTop, setShowScrollToTop] = useState(false);
     const handleScroll = () => {
         setShowScrollToTop(window.scrollY > 300);
     };
     const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({top: 0, behavior: "smooth"});
     };
 
     const addFilterData = async (flights: any[]) => {
         const airlineSet = new Set(flights.map((v: any) => v.airline.name));
+        const minPrice = flights.map((v: any) => v.price).sort((a, b) => a - b);
+        const maxPrice = flights.map((v: any) => v.price).sort((a, b) => b - a);
+        const sortedPrices = flights.map((v: any) => v.price).sort((a, b) => a - b);
+        const median =
+            sortedPrices.length === 0
+                ? 0
+                : sortedPrices.length % 2 === 1
+                    ? sortedPrices[Math.floor(sortedPrices.length / 2)]
+                    : (sortedPrices[sortedPrices.length / 2 - 1] + sortedPrices[sortedPrices.length / 2]) / 2;
         setFilterOptions([
-            { key: "Airlines", values: Array.from(airlineSet) },
-            { key: "Stops", values: ["Nonstop", "1 Stop", "2+ Stops"] },
-            { key: "Times", values: ["Morning", "Afternoon", "Evening", "Night"] },
-            { key: "Price", values: ["< $200", "200-$400", ">$400"] },
-            { key: "Policy", values: ["Company Policy", "Flexible", "Non-refundable"] }
+            {key: "Airlines", values: Array.from(airlineSet)},
+            {key: "Stops", values: ["Nonstop", "1 Stop", "2+ Stops"]},
+            {key: "Times", values: ["Morning", "Afternoon", "Evening", "Night"]},
+            {
+                key: "Price",
+                values: ['greater than ' + minPrice[0], minPrice[0] + ' - ' + median, ' less than ' + maxPrice[0]]
+            },
+            {key: "Policy", values: ["Company Policy", "Flexible", "Non-refundable"]}
         ]);
     };
 
@@ -78,12 +89,65 @@ const FlightListing: React.FC = () => {
     const from = queryParams.get("from") || "DEL";
     const to = queryParams.get("to") || "BOM";
     const date = queryParams.get("date") || "2025-05-28";
-
     const flightsRef = useRef<any[]>([]);
+    const [selectedSortOption, setSelectedSortOption] = useState(sortOptions[0]);
+
+    const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: string }>({});
+    const handleFilterChange = (key: string, value: string) => {
+        setSelectedFilters((prevFilters) => {
+            const updatedFilters = {
+                ...prevFilters,
+                [key]: value,
+            };
+            // Apply filters to flights
+            const filteredFlights = flightsRef.current.filter((flight) => {
+                return Object.entries(updatedFilters).every(([filterKey, filterValue]) => {
+                    if (filterKey === "Airlines") {
+                        return flight.airline.name === filterValue;
+                    }
+                    if (filterKey === "Stops") {
+                        return flight.stops === filterValue;
+                    }
+                    if (filterKey === "Times") {
+                        return flight.timeCategory === filterValue;
+                    }
+                    if (filterKey === "Price") {
+                        const price = flight.price;
+                        if (filterValue.includes("greater than")) {
+                            return price > parseInt(filterValue.split(" ")[2], 10);
+                        }
+                        if (filterValue.includes("less than")) {
+                            return price < parseInt(filterValue.split(" ")[2], 10);
+                        }
+                        const [min, max] = filterValue.split(" - ").map(Number);
+                        return price >= min && price <= max;
+                    }
+                    if (filterKey === "Policy") {
+                        return flight.policy === filterValue;
+                    }
+                    return true;
+                });
+            });
+
+            setFlights(filteredFlights);
+            return updatedFilters;
+        });
+    };
+
+    const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedOption = event.target.value;
+        setSelectedSortOption(selectedOption);
+        if (selectedOption === "Price Low to High") {
+            setFlights(sortByPriceAsc(flightsRef.current, true));
+        } else if (selectedOption === "Price High to Low") {
+            setFlights(sortByPriceAsc(flightsRef.current, false));
+        } else {
+            setFlights([...flightsRef.current]); // Default sorting (Smart Mix)
+        }
+    };
 
     const applyFilters = useCallback(() => {
-        // Add your filtering logic here if needed
-        return sortByPriceAsc(flightsRef.current);
+        return sortByPriceAsc(flightsRef.current, true);
     }, []);
 
     useEffect(() => {
@@ -134,15 +198,19 @@ const FlightListing: React.FC = () => {
     return (
         <div className="flight-listing-outer">
             <div className="flight-search-outer">
-                <FlightSearch />
+                <FlightSearch/>
             </div>
             <div className="flight-listing-toolbar">
                 <div className="flight-listing-filters">
                     {filterOptions.map(opt => (
                         <div className="flight-listing-filter" key={opt.key}>
-                            <select>
-                                {opt.values.map(val => (
-                                    <option key={val}>{val}</option>
+                            <select
+                                value={selectedFilters[opt.key] || ""}
+                                onChange={(e) => handleFilterChange(opt.key, e.target.value)}
+                            >
+                                <option value="" disabled>Select {opt.key}</option>
+                                {opt.values.map((val) => (
+                                    <option key={val} value={val}>{val}</option>
                                 ))}
                             </select>
                         </div>
@@ -150,7 +218,7 @@ const FlightListing: React.FC = () => {
                 </div>
                 <div className="flight-listing-sort">
                     <label htmlFor="sortby">Sort by</label>
-                    <select id="sortby">
+                    <select id="sortby" value={selectedSortOption} onChange={handleSortChange}>
                         {sortOptions.map(opt => (
                             <option key={opt}>{opt}</option>
                         ))}
@@ -180,7 +248,7 @@ const FlightListing: React.FC = () => {
                 </div>
                 {loading && (
                     <div className="flight-listing-loading">
-                        <ProgressBar />
+                        <ProgressBar/>
                     </div>
                 )}
                 <div className="flight-listing-cards">
@@ -188,9 +256,6 @@ const FlightListing: React.FC = () => {
                         <FlightCard
                             key={flight.flightId}
                             flight={flight}
-                            selectedFareTab={selectedFareTab}
-                            selected={selectedFlight === flight.flightId}
-                            onSelect={() => setSelectedFlight(selectedFlight === flight.flightId ? null : flight.flightId)}
                         />
                     ))}
                 </div>

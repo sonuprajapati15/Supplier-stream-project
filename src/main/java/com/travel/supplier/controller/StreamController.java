@@ -1,6 +1,7 @@
 package com.travel.supplier.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.travel.supplier.BookingBo;
 import com.travel.supplier.config.WebClientConfig;
 import com.travel.supplier.executor.StreamExecutor;
 import com.travel.supplier.vendor.AmadeusCaller;
@@ -24,26 +25,26 @@ public class StreamController {
 
     private final StreamExecutor streamExecutor;
     private final AmadeusCaller amadeusCaller;
+    private final SabreCaller sabreCaller;
 
     public StreamController(@Autowired WebClientConfig webClientConfig,
                             @Value("${external.api.endpoint.vendor1}") String vendor1Endpoint,
                             @Value("${external.api.endpoint.vendor2}") String vendor2Endpoint,
                             @Value("${external.api.booking.endpoint.vendor1}") String flightBookingEndpoint,
                             @Value("${external.api.booking.save.endpoint.vendor1}") String saveBookingEndpoint,
+                            @Value("${external.api.booking.save.endpoint.vendor2}") String saveBookingEndpoint2,
                             @Value("${external.api.flight.search.endpoint.vendor1}") String vendor1FlightSearchEndpoint,
                             @Value("${external.api.flight.search.endpoint.vendor2}") String vendor2FlightSearchEndpoint,
                             @Value("${external.api.city.search.endpoint.vendor1}") String vendor1CitySearchEndpoint) {
 
-        amadeusCaller = new AmadeusCaller(webClientConfig.createWebClient(), vendor1Endpoint,
+        this.amadeusCaller = new AmadeusCaller(webClientConfig.createWebClient(), vendor1Endpoint,
                 flightBookingEndpoint, vendor1FlightSearchEndpoint, vendor1CitySearchEndpoint, saveBookingEndpoint);
-        List<VendorCaller> callers = List.of(amadeusCaller,
-                new SabreCaller(webClientConfig.createWebClient(), vendor2Endpoint, vendor2FlightSearchEndpoint)
-        );
+        this.sabreCaller = new SabreCaller(webClientConfig.createWebClient(), vendor2Endpoint, vendor2FlightSearchEndpoint, saveBookingEndpoint2);
+
+        List<VendorCaller> callers = List.of(amadeusCaller, sabreCaller);
 
         this.streamExecutor = new StreamExecutor(callers);
     }
-
-
 
 
     @GetMapping(value = "/stream/flights", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
@@ -65,19 +66,37 @@ public class StreamController {
         return Flux.concat(start, stream, end);
     }
 
-   @GetMapping(value = "/stream/all/booking", produces = MediaType.APPLICATION_JSON_VALUE)
-   public ResponseEntity<String> streamAllBookings(@RequestParam(required = false, defaultValue = "1234") String userId) {
-       return new ResponseEntity<>(amadeusCaller.fetchAllBookings(userId), HttpStatus.OK);
-   }
+    @GetMapping(value = "/stream/all/booking", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> streamAllBookings(@RequestParam(required = false, defaultValue = "1234") String userId) {
+        return new ResponseEntity<>(amadeusCaller.fetchAllBookings(userId), HttpStatus.OK);
+    }
 
-   @GetMapping(value = "/stream/all/cities", produces = MediaType.APPLICATION_JSON_VALUE)
-   public Mono<JsonNode> streamAllCities(@RequestParam(value = "from", required = false) String from,
-                                       @RequestParam(value = "keyword", required = true) String keyword) {
-       return amadeusCaller.streamAllCities(keyword, from);
-   }
+    @GetMapping(value = "/stream/all/cities", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<JsonNode> streamAllCities(@RequestParam(value = "from", required = false) String from,
+                                          @RequestParam(value = "keyword", required = true) String keyword) {
+        return amadeusCaller.streamAllCities(keyword, from);
+    }
 
-   @GetMapping(value = "makeBooking", produces = MediaType.APPLICATION_JSON_VALUE)
-   public Mono<JsonNode> streamAllCities(@RequestBody String booking) {
-       return amadeusCaller.saveBooking(booking);
-   }
+    @GetMapping(value = "/makeBooking", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<JsonNode> streamAllCities(@RequestBody BookingBo booking) {
+        if ("amadeus".equalsIgnoreCase(booking.getProvider())) {
+            return amadeusCaller.makeBooking(booking);
+        } else if (booking.getProvider().equalsIgnoreCase("sabre")) {
+            return sabreCaller.makeBooking(booking);
+        }
+        return Mono.error(new RuntimeException("Unknown provider"));
+    }
+
+    @GetMapping(value = "flightSearchById", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<JsonNode> streamAllCities(@RequestParam("flightId") String flightId,
+                                          @RequestParam("fareId") Integer fareId,
+                                          @RequestParam("provider") String provider,
+                                          @RequestParam("fareType") String fareType) {
+        if (provider.equalsIgnoreCase("amadeus")) {
+            return amadeusCaller.searchFlightById(flightId, fareId, fareType);
+        } else if (provider.equalsIgnoreCase("sabre")) {
+            return sabreCaller.searchFlightById(flightId, fareId, fareType);
+        }
+        return Mono.error(new IllegalArgumentException("Invalid provider specified: " + provider));
+    }
 }

@@ -65,13 +65,14 @@
 }
 .flight-listing-filters {
   display: flex;
-  gap: 1.2rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 .flight-listing-filter {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  border-color: #7c8495;
   font-size: 1rem;
 }
 .flight-listing-filter select {
