@@ -77,7 +77,7 @@ public class StreamController {
         return amadeusCaller.streamAllCities(keyword, from);
     }
 
-    @GetMapping(value = "/makeBooking", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/makeBooking", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<JsonNode> streamAllCities(@RequestBody BookingBo booking) {
         if ("amadeus".equalsIgnoreCase(booking.getProvider())) {
             return amadeusCaller.makeBooking(booking);
@@ -87,7 +87,7 @@ public class StreamController {
         return Mono.error(new RuntimeException("Unknown provider"));
     }
 
-    @GetMapping(value = "flightSearchById", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/flightSearchById", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<JsonNode> streamAllCities(@RequestParam("flightId") String flightId,
                                           @RequestParam("fareId") Integer fareId,
                                           @RequestParam("provider") String provider,

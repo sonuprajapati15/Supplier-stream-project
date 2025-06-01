@@ -18,7 +18,7 @@ public class SabreCaller implements VendorCaller {
         this.webClient = webClient;
         this.endpoint = endpoint;
         this.vendor2FlightSearchEndpoint = vendor2FlightSearchEndpoint;
-        this.saveBookingEndpoint = saveBookingEndpoint;
+        this.saveBookingEndpoint = saveBookingEndpoint2;
     }
 
 
@@ -71,7 +71,8 @@ public class SabreCaller implements VendorCaller {
     public Mono<JsonNode> makeBooking(BookingBo booking) {
         return webClient.post()
                 .uri(saveBookingEndpoint)
-                .bodyValue(booking)
+                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                .bodyValue(valueToJons(booking))
                 .retrieve()
                 .bodyToMono(String.class)
                 .map(response -> {

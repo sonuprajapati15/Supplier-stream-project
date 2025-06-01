@@ -102,7 +102,8 @@ public class AmadeusCaller implements VendorCaller {
     public Mono<JsonNode> makeBooking(BookingBo booking) {
         return webClient.post()
                 .uri(saveBookingEndpoint)
-                .bodyValue(booking)
+                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                .bodyValue(valueToJons(booking))
                 .retrieve()
                 .bodyToMono(String.class)
                 .map(response -> {
