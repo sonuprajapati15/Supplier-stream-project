@@ -7,7 +7,7 @@ const ProgressBar: React.FC = () => {
 
     useEffect(() => {
         const stages = [
-            { text: "Loading flights...", color: "skyblue" },
+            { text: "Loading flights...", color: "grey" },
             { text: "Fetching from different vendors...", color: "orange" },
             { text: "Comparing best prices...", color: "purple" },
             { text: "Done!", color: "green" },

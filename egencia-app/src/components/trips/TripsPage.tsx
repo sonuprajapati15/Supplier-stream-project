@@ -59,11 +59,13 @@ const TripsPage: React.FC = () => {
                 {!loading &&
                     data[tab]?.map((trip: any, i: number) => (
                         <div className="trips-card-outer" key={trip._id || trip.flightId || i}>
-                            <img
-                                src={trip.bgImage}
-                                alt="Description"
-                                style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }}
-                            />
+                            <div className="trips-img-outer">
+                                <img
+                                    src={trip.bgImage}
+                                    alt="Description"
+                                    style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "20px" }}
+                                />
+                            </div>
                             <div className="trips-card">
                                 <div className="trips-card-header">
                                     <span className="trips-card-icon">✈️</span>

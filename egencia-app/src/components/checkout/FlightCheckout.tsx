@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../../css/checkout-page.css";
+import BookingProgress from "../progess-bar/BookingProgress";
 
 // Utility to get URL params
 function getUrlParam(key: string) {
@@ -48,9 +49,18 @@ const FlightCheckoutPage: React.FC = () => {
             setProgress((old) => {
                 if (old >= 5) {
                     clearInterval(interval);
-                    setTimeout(() => {
+                    // Add folding animation before redirecting to /trips
+                    const checkoutLayout = document.querySelector('.checkout-layout') as HTMLElement;
+                    if (checkoutLayout) {
+                        checkoutLayout.style.transition = 'transform 0.7s cubic-bezier(0.77,0,0.18,1), opacity 0.7s';
+                        checkoutLayout.style.transform = 'scaleY(0)';
+                        checkoutLayout.style.opacity = '0';
+                        setTimeout(() => {
+                            window.location.href = "/trips";
+                        }, 700);
+                    } else {
                         window.location.href = "/trips";
-                    }, 900);
+                    }
                     return 5;
                 }
                 return old + 1;
@@ -321,25 +331,25 @@ const PassengerModal: React.FC<{ onClose: () => void; onBook: () => void }> = ({
     );
 };
 
-const STAGES = ["Seat Locking", "Processing", "Confirming", "Finalizing Payment", "Completed"];
-const BookingProgress: React.FC<{ stages: number }> = ({stages}) => (
-    <div className="booking-progress-overlay">
-        <div className="booking-progress-modal">
-            <div className="booking-progress-title">Booking your flight...</div>
-            <div className="booking-progress-bar">
-                {STAGES.map((stage, idx) => (
-                    <div key={idx} className={"booking-progress-step" + (stages > idx ? " active" : "")}>
-                        <div className="booking-progress-dot"/>
-                        <div className="booking-progress-label">{stage}</div>
-                    </div>
-                ))}
-            </div>
-            <div className="booking-progress-animation">
-                <img src="https://cdn-icons-png.flaticon.com/512/69/69524.png" alt="plane"
-                     className="booking-progress-plane"/>
-            </div>
-        </div>
-    </div>
-);
+// const STAGES = ["Seat Locking", "Processing", "Confirming", "Finalizing Payment", "Completed"];
+// const BookingProgress: React.FC<{ stages: number }> = ({stages}) => (
+//     <div className="booking-progress-overlay">
+//         <div className="booking-progress-modal">
+//             <div className="booking-progress-title">Booking your flight...</div>
+//             <div className="booking-progress-bar">
+//                 {STAGES.map((stage, idx) => (
+//                     <div key={idx} className={"booking-progress-step" + (stages > idx ? " active" : "")}>
+//                         <div className="booking-progress-dot"/>
+//                         <div className="booking-progress-label">{stage}</div>
+//                     </div>
+//                 ))}
+//             </div>
+//             <div className="booking-progress-animation">
+//                 <img src="https://cdn-icons-png.flaticon.com/512/69/69524.png" alt="plane"
+//                      className="booking-progress-plane"/>
+//             </div>
+//         </div>
+//     </div>
+// );
 
 export default FlightCheckoutPage;
