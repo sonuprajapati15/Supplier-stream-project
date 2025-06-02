@@ -1,3 +1,10 @@
+.flight-listing-news-outer {
+  background: #f9f9f9;
+  min-height: 100vh;
+  max-width: 2000px;
+  display: flex;
+  padding-bottom: 2rem;
+}
 .flight-listing-outer {
   background: #f9f9f9;
   min-height: 100vh;
@@ -187,6 +194,7 @@
   gap: 0.3rem;
   min-width: 80px;
   margin-right: 0.5rem;
+  align-items: flex-end;
   margin-top: 0.5rem;
 }
 .flight-label-green {
@@ -214,6 +222,7 @@
   display: flex;
   flex-direction: row;
   gap: 0.2rem;
+  padding-top: 25px;
   min-width: 180px;
 }
 .flight-time {

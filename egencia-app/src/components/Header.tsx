@@ -19,8 +19,11 @@ const Header: React.FC = () => {
           <div className="nav-dropdown">
             <span>Tools ▼</span>
             <div className="dropdown-content">
-              <a href="#">Option 1</a>
-              <a href="#">Option 2</a>
+              <a href="#">Add User</a>
+              <a href="#">Approve User</a>
+              <a href="#">Travel Policy</a>
+              <a href="#">Travel Group</a>
+              <a href="#">Point of Sale</a>
             </div>
           </div>
         </nav>

@@ -26,6 +26,8 @@ const FlightCheckoutPage: React.FC = () => {
     const [showPassengerModal, setShowPassengerModal] = useState(false);
     const [progress, setProgress] = useState(0);
     const [booking, setBooking] = useState(false);
+    const [weather, setWeather] = useState<any>(null);
+
 
     const flightId = getUrlParam("flightId") ?? "";
     const fareType = getUrlParam("fareType") ?? "";
@@ -41,6 +43,13 @@ const FlightCheckoutPage: React.FC = () => {
             setLoading(false);
         });
     }, [flightId, fareType, fareId, vendor]);
+
+    useEffect(() => {
+        if (!flight?.to) return;
+        fetch(`http://localhost:9000/supplier/v1/weather?place=${flight.to}`)
+            .then(res => res.json())
+            .then(setWeather);
+    }, [flight]);
 
     useEffect(() => {
         if (!booking) return;
@@ -180,6 +189,19 @@ const FlightCheckoutPage: React.FC = () => {
                         <a href="#" className="flight-summary-details-link">View details &gt;</a>
                     </div>
                 </div>
+                {weather && (
+                    <div className="fb-detail-weather">
+                        <h3>Weather in {weather.location.name}</h3>
+                        <div className="fb-detail-weather-info">
+                            <img src={weather.current.condition.icon} alt={weather.current.condition.text}/>
+                        </div>
+                        <div>
+                            <div><b>Condition: </b> {weather.current.condition.text}</div>
+                            <div><b>Temperature: </b> {weather.current.temp_c}°C</div>
+                            <div><b>Wind: </b> {weather.current.wind_kph} kph ({weather.current.wind_dir})</div>
+                        </div>
+                    </div>
+                )}
                 <div className="checkout-card checkout-price-summary">
                     <div className="checkout-price-title-row">
                         <span>Price summary</span>
@@ -330,26 +352,5 @@ const PassengerModal: React.FC<{ onClose: () => void; onBook: () => void }> = ({
         </div>
     );
 };
-
-// const STAGES = ["Seat Locking", "Processing", "Confirming", "Finalizing Payment", "Completed"];
-// const BookingProgress: React.FC<{ stages: number }> = ({stages}) => (
-//     <div className="booking-progress-overlay">
-//         <div className="booking-progress-modal">
-//             <div className="booking-progress-title">Booking your flight...</div>
-//             <div className="booking-progress-bar">
-//                 {STAGES.map((stage, idx) => (
-//                     <div key={idx} className={"booking-progress-step" + (stages > idx ? " active" : "")}>
-//                         <div className="booking-progress-dot"/>
-//                         <div className="booking-progress-label">{stage}</div>
-//                     </div>
-//                 ))}
-//             </div>
-//             <div className="booking-progress-animation">
-//                 <img src="https://cdn-icons-png.flaticon.com/512/69/69524.png" alt="plane"
-//                      className="booking-progress-plane"/>
-//             </div>
-//         </div>
-//     </div>
-// );
 
 export default FlightCheckoutPage;

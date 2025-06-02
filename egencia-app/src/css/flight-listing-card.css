@@ -17,7 +17,7 @@
 
 .flight-labels {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 0.3rem;
     min-width: 80px;
     margin-right: 0.5rem;
@@ -34,6 +34,27 @@
     border-radius: 6px;
     font-weight: 600;
     font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+    display: inline-block;
+}
+.flight-label-blue {
+    background: #0b49ce;
+    color: #ffffff;
+    padding: 0.14rem 0.7rem;
+    border-radius: 6px;
+    font-weight: 300;
+    font-size: 0.80rem;
+    margin-bottom: 0.2rem;
+    display: inline-block;
+}
+
+.flight-label-orange {
+    background: #c75706;
+    color: #ffffff;
+    padding: 0.14rem 0.7rem;
+    border-radius: 6px;
+    font-weight: 300;
+    font-size: 0.80rem;
     margin-bottom: 0.2rem;
     display: inline-block;
 }
@@ -136,9 +157,10 @@
     font-weight: 300;
     font-size: 0.8rem;
     cursor: pointer;
-    margin-top: 0.15rem;
+    margin-bottom: 0;
     text-align: left;
-    padding-bottom: 0;
+    align-items: baseline;
+    padding-left: 10px;
 }
 .flight-view-details:hover {
     text-decoration: underline;
@@ -290,7 +312,7 @@
     .flight-card-main {
         flex-direction: column;
         gap: 0.4rem;
-        margin-top: 0.4rem;
+        margin-top: 0.8rem;
         margin-bottom: 0.4rem;
     }
     .flight-fare-details-row {

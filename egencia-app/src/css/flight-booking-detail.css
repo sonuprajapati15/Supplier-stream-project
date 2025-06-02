@@ -1,254 +1,528 @@
-.flight-booking-detail-bg {
-    background: linear-gradient(135deg, #f6faff 65%, #eaf6ff 100%);
+.fb-detail-page {
     min-height: 100vh;
-    padding: 0;
+    max-height: 100%;
     font-family: 'Inter', Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    transition: background 0.33s;
 }
-.flight-booking-detail-main {
-    max-width: 980px;
+.fb-detail-bg-upcoming {
+    background: linear-gradient(135deg, #fffbe6 80%, #ffe6c2 100%);
+}
+.fb-detail-bg-completed {
+    background: linear-gradient(135deg, #eafbe6 80%, #c9f7d6 100%);
+}
+.fb-detail-bg-cancelled {
+    background: linear-gradient(135deg, #fff1f0 80%, #ffe3e6 100%);
+}
+.fb-detail-main {
+    max-width: 1100px;
     margin: 0 auto;
     background: #fff;
     border-radius: 18px;
-    box-shadow: 0 3px 24px 0 #d9e7f6;
+    box-shadow: 0 3px 24px 0 #e1e7f6;
     padding: 2.2rem 2.7rem 2.5rem 2.7rem;
     margin-top: 2.5rem;
     margin-bottom: 2.5rem;
     position: relative;
+    display: flex;
+    gap: 2.7rem;
 }
-.flight-booking-back {
+.fb-detail-left-pane {
+    flex: 2.2;
+    min-width: 0;
+    max-width: 580px;
+    padding-right: 1.7rem;
+    display: flex;
+    flex-direction: column;
+}
+.fb-detail-back {
     color: #2663d7;
     font-size: 1.02rem;
     text-decoration: underline;
     margin-bottom: 0.9rem;
     display: inline-block;
 }
-.flight-booking-ref {
+.fb-detail-ref {
     font-size: 0.97rem;
     color: #6e7d98;
     margin-bottom: 0.3rem;
 }
-.flight-booking-title-row {
+.fb-detail-title-row {
     display: flex;
     align-items: center;
     gap: 1.1rem;
     margin-bottom: 0.19rem;
 }
-.flight-booking-title {
+.fb-detail-title {
     font-size: 2.07rem;
     font-weight: 700;
     color: #1a2b49;
 }
-.flight-booking-status {
+.fb-detail-title-arrow {
+    color: #2663d7;
+    margin: 0 0.25rem;
+    font-size: 1.6rem;
+    vertical-align: middle;
+}
+.fb-detail-status {
     font-size: 1.03rem;
     font-weight: 600;
     padding: 0.22rem 0.7rem;
     border-radius: 8px;
     margin-left: 0.5rem;
 }
-.flight-status-cancelled {
+.fb-status-cancelled {
     background: #ffe1e1;
     color: #e53935;
 }
-.flight-status-upcoming {
+.fb-status-upcoming {
     background: #fffbe6;
     color: #ff9800;
 }
-.flight-status-completed {
+.fb-status-completed {
     background: #e6fbe1;
     color: #43a047;
 }
-.flight-booking-edit {
+.fb-detail-edit {
     color: #6e7d98;
     font-size: 1.05rem;
     cursor: pointer;
     margin-left: 0.6rem;
 }
-.flight-booking-date {
+.fb-detail-date {
     font-size: 1.03rem;
     color: #314151;
     margin-bottom: 0.22rem;
 }
-.flight-booking-trip-type {
+.fb-detail-trip-type {
     font-size: 0.99rem;
     color: #888;
     margin-bottom: 0.77rem;
 }
-.flight-booking-img img {
+.fb-detail-img img {
     width: 100%;
     height: 170px;
     object-fit: cover;
     border-radius: 12px;
     margin-bottom: 2.2rem;
+    max-width: 540px;
 }
 
-.flight-booking-segments {
-    margin-bottom: 1.7rem;
+.fb-detail-segment-card-modern {
+    background: #f7f8fa;
+    border-radius: 13px;
+    border: 1.2px solid #e8eafd;
+    margin-bottom: 2.1rem;
+    padding: 1.3rem 1.7rem 1.2rem 1.7rem;
+    box-shadow: 0 1px 7px #e7e8ef;
+    margin-top: 1rem;
 }
-.flight-booking-segment {
-    display: flex;
-    gap: 1.6rem;
-    padding: 0.9rem 0;
-    border-left: 3.5px solid #286fe5;
-    margin-bottom: 0.6rem;
-    align-items: flex-start;
+.fb-detail-segment-card-beautified {
+    margin-top: 1rem;
+    padding: 2.1rem 2.2rem 1.7rem 2.2rem;
+    background: #f9fafc;
+    border: 1.7px solid #e1e8f6;
+    box-shadow: 0 2px 16px #e7e8ef33;
 }
-.flight-booking-segment-icon {
-    font-size: 1.5rem;
-    margin-top: 0.2rem;
-    color: #286fe5;
-}
-.flight-booking-segment-main {
-    flex: 1;
+.fb-detail-segment-card-rich {
+    border: 1.7px solid #cde4ff;
+    background: #f7fafd;
+    box-shadow: 0 6px 18px #d6d7f620;
+    margin-top: 1rem;
+    padding: 2.1rem 2.2rem 1.7rem 2.2rem;
     display: flex;
     flex-direction: column;
-    gap: 0.19rem;
+    gap: 1.2rem;
 }
-.flight-booking-segment-row {
-    margin-bottom: 0.09rem;
-    font-size: 1.04rem;
-    color: #283246;
+.fb-detail-segment-pathrow {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    margin-bottom: 1.2rem;
+    position: relative;
+}
+.fb-detail-segment-fromto {
     display: flex;
     align-items: center;
-    gap: 0.7rem;
+    justify-content: space-between;
+    gap: 1.5rem;
 }
-.flight-booking-airline-logo {
-    width: 32px;
-    height: 32px;
+.fb-detail-segment-airport {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-width: 120px;
+}
+.fb-detail-segment-location-pin {
+    font-size: 1.35rem;
+    margin-top: 0.2rem;
+}
+.fb-detail-segment-city {
+    font-weight: 700;
+    color: #193866;
+    font-size: 1.18rem;
+}
+.fb-detail-segment-label-small {
+    font-size: 0.94rem;
+    color: #999fb2;
+    font-weight: 500;
+}
+.fb-detail-segment-patharrow-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 180px;
+}
+.fb-detail-segment-time-main {
+    font-size: 1.22rem;
+    font-weight: 700;
+    color: #253050;
+    margin-bottom: 0.2rem;
+}
+.fb-detail-segment-patharrow {
+    display: flex;
+    align-items: center;
+    width: 145px;
+    margin: 0.22rem 0 0.18rem 0;
+    position: relative;
+}
+.fb-detail-segment-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fbcb69;
+    border: 2.5px solid #eab649;
+}
+.fb-detail-segment-dot.start {
+    margin-left: 0;
+    background: #70a1e3;
+    border-color: #2663d7;
+}
+.fb-detail-segment-dot.end {
+    margin-right: 0;
+    background: #43a047;
+    border-color: #3bd16f;
+}
+.fb-detail-segment-line {
+    flex: 1;
+    height: 4px;
+    background: linear-gradient(90deg, #eab649 60%, #f8e8bb 100%);
+}
+.fb-detail-segment-plane {
+    font-size: 1.24rem;
+    margin: 0 4px;
+    color: #2663d7;
+    animation: fb-detail-plane-fly 2.5s linear infinite alternate;
+}
+@keyframes fb-detail-plane-fly {
+    0% { transform: translateX(-2px) rotate(-10deg);}
+    100% { transform: translateX(10px) rotate(10deg);}
+}
+.fb-detail-segment-duration {
+    font-size: 1.02rem;
+    color: #b58833;
+    font-weight: 600;
+    background: #fffbe6;
+    border-radius: 7px;
+    padding: 0.14rem 0.7rem;
+    margin: 0.16rem 0 0.13rem 0;
+}
+.fb-detail-segment-meta-top {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-top: 0.6rem;
+    margin-left: 3px;
+    font-size: 1.04rem;
+    color: #556b8b;
+}
+.fb-detail-segment-cabin {
+    font-weight: 700;
+}
+.fb-detail-segment-flighttype {
+    background: #e5f6fe;
+    color: #2663d7;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: 0.97rem;
+    padding: 0.13rem 0.7rem;
+}
+.fb-status-chip {
+    background: #fffbe6;
+    color: #ff9800;
+    border-radius: 7px;
+    font-size: 0.97rem;
+    padding: 0.13rem 0.7rem;
+    margin-left: 0.5rem;
+}
+.fb-detail-segment-row-modern {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    font-size: 1.13rem;
+    color: #1d2746;
+    margin-bottom: 0.5rem;
+}
+.fb-detail-segment-airline-meta {
+    font-size: 1.03rem;
+    color: #6a7c98;
+    margin-bottom: 0.37rem;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+}
+.fb-detail-airline-logo {
+    width: 28px;
+    height: 28px;
     object-fit: contain;
     border-radius: 7px;
     margin-right: 0.5rem;
     background: #fff;
     box-shadow: 0 1px 6px rgba(38,99,215,0.10);
 }
-.flight-booking-segment-time {
-    margin-left: 1.1rem;
+.fb-detail-airline-name {
+    font-weight: 600;
+    color: #233450;
+}
+.fb-detail-aircraft, .fb-detail-terminal, .fb-detail-gate {
+    color: #999;
+    font-size: 1.01rem;
+}
+.fb-detail-segment-pnr {
+    color: #7b89a2;
+    font-size: 1.02rem;
+    margin-left: 0.6rem;
+}
+.fb-detail-features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem 2.5rem;
+    margin: 1.1rem 0 0.3rem 0;
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.1rem 1.2rem;
+    box-shadow: 0 1px 8px 0 #e4e8fd66;
+}
+.fb-detail-feature-label {
+    font-size: 0.95rem;
+    color: #8997b2;
+    margin-bottom: 0.13rem;
+    font-weight: 500;
+}
+.fb-detail-feature-value {
     font-size: 1.09rem;
-    color: #1d2746;
+    color: #233450;
     font-weight: 600;
 }
-.flight-booking-segment-dot {
-    margin: 0 0.17rem;
-    color: #b8b8b8;
-    font-size: 1.16rem;
+.fb-detail-fare-components-block {
+    margin-top: 1.1rem;
+    background: #fdfcf7;
+    border-radius: 8px;
+    box-shadow: 0 1px 7px #e7e8ef;
+    padding: 1.1rem 1.3rem 1.3rem 1.3rem;
 }
-.flight-booking-segment-arrow {
-    color: #2663d7;
-    margin: 0 0.13rem;
+.fb-detail-fare-components-title {
+    font-size: 1.09rem;
+    font-weight: 700;
+    color: #253050;
+    margin-bottom: 0.7rem;
 }
-.flight-booking-segment-features {
-    flex-wrap: wrap;
-    gap: 1.1rem;
-    color: #5878a1;
-    font-size: 0.97rem;
-}
-.flight-booking-segment-policies {
-    flex-wrap: wrap;
-    gap: 1.1rem;
-    color: #9ba3b0;
-    font-size: 0.97rem;
-}
-.flight-booking-actions-row {
-    display: flex;
-    gap: 2.8rem;
-    flex-wrap: wrap;
-    margin-top: 2.1rem;
-}
-.flight-booking-actions {
+.fb-detail-fare-components-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    min-width: 180px;
 }
-.flight-booking-action-primary {
-    background: #2663d7;
-    color: #fff;
-    font-weight: 700;
-    font-size: 1.11rem;
-    border: none;
-    border-radius: 10px;
-    padding: 0.7rem 1.7rem;
-    cursor: pointer;
-    margin-bottom: 0.3rem;
-    margin-top: 0.2rem;
-    box-shadow: 0 2px 12px 0 rgba(38,99,215,0.11);
-    transition: background 0.18s;
+.fb-detail-fare-component {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.01rem;
+    color: #49586c;
+    padding: 0.17rem 0;
 }
-.flight-booking-action-primary:hover {
-    background: #1743a9;
-}
-.flight-booking-action {
-    background: #fff;
-    color: #2663d7;
-    border: 1.6px solid #2663d7;
+.fb-detail-fare-comp-label {
     font-weight: 600;
-    font-size: 1.03rem;
-    border-radius: 10px;
-    padding: 0.7rem 1.3rem;
-    cursor: pointer;
-    margin-bottom: 0.3rem;
-    transition: background 0.16s;
 }
-.flight-booking-action:hover {
-    background: #eaf3ff;
+.fb-detail-fare-comp-price {
+    font-size: 1.01rem;
+    font-weight: 500;
+    color: #b58833;
 }
-.flight-booking-trip-center {
+.fb-detail-fare-comp-price .zero,
+.fb-detail-price-row .zero {
+    color: #43a047;
+    font-weight: 700;
+    font-size: 0.97rem;
+}
+.fb-detail-fare-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.9rem;
+    font-size: 1.11rem;
+    font-weight: 700;
+    color: #193866;
+    border-top: 1.2px solid #eee8cf;
+    padding-top: 0.7rem;
+}
+.fb-detail-fare-total-label { font-weight: 700; }
+.fb-detail-fare-total-amount { color: #1948b2; }
+
+.fb-detail-segment-policies {
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    color: #516b8b;
+    font-size: 0.99rem;
+    margin-bottom: 0.13rem;
+}
+.fb-detail-segment-manage-modern {
+    margin-top: 1.2rem;
+}
+.fb-detail-segment-manage-link {
+    color: #2663d7;
+    font-weight: 600;
+    text-decoration: underline;
+    font-size: 1.01rem;
+}
+.fb-detail-right-col {
+    flex: 1.1;
+    min-width: 330px;
+    max-width: 370px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    min-width: 150px;
+    gap: 0.5rem;
+    margin-top: 0.2rem;
 }
-.flight-booking-trip-msgs {
+.fb-detail-actions-card,
+.fb-detail-tripcenter-card,
+.fb-detail-price-card {
+    background: #f7f8fa;
+    border-radius: 13px;
+    padding: 1.2rem 1.4rem 1.2rem 1.4rem;
+    box-shadow: 0 1px 7px #e7e8ef;
+    border: 1.2px solid #e8eafd;
+    margin-bottom: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.fb-detail-actions-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #181e2f;
+    margin-bottom: 0.5rem;
+}
+.fb-detail-action-btn {
     background: #fff;
     color: #2663d7;
     border: 1.6px solid #2663d7;
     font-weight: 600;
-    font-size: 1.03rem;
-    border-radius: 10px;
+    font-size: 1.04rem;
+    border-radius: 9px;
     padding: 0.7rem 1.3rem;
     cursor: pointer;
-    margin-bottom: 0.3rem;
-    transition: background 0.16s;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    justify-content: center;
+    transition: background 0.17s, color 0.17s;
 }
-.flight-booking-trip-msgs:hover {
+.fb-detail-action-btn:hover {
     background: #eaf3ff;
 }
-.flight-booking-price-breakdown {
-    background: #f6faff;
-    padding: 1.1rem 1.5rem;
-    border-radius: 12px;
-    min-width: 240px;
-    max-width: 330px;
-    margin-top: 0.4rem;
-}
-.flight-booking-price-title {
+.fb-detail-action-btn-main {
+    background: #2663d7;
+    color: #fff;
+    border: none;
     font-weight: 700;
-    font-size: 1.07rem;
-    margin-bottom: 0.7rem;
-    color: #253050;
 }
-.flight-booking-price-row {
+.fb-detail-action-btn-main:hover {
+    background: #1743a9;
+}
+.fb-detail-action-btn-more {
+    color: #314151;
+    background: #f7f8fa;
+    border: 1.1px solid #e8eafd;
+}
+.fb-detail-action-icon {
+    font-size: 1.12rem;
+}
+.fb-detail-tripcenter-title {
+    font-size: 1.11rem;
+    font-weight: 700;
+    color: #181e2f;
+    margin-bottom: 0.4rem;
+}
+.fb-detail-tripcenter-msg {
+    background: #fff;
+    color: #222;
+    border: 1px solid #d4d8ee;
+    font-weight: 500;
+    font-size: 1.01rem;
+    border-radius: 7px;
+    padding: 0.7rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    transition: background 0.16s;
+}
+.fb-detail-tripcenter-msg:hover {
+    background: #eaf3ff;
+}
+.fb-detail-tripcenter-msg-icon {
+    font-size: 1.19rem;
+}
+.fb-detail-price-card {
+    background: #f7f8fa;
+    border-radius: 13px;
+    padding: 1.2rem 1.4rem;
+    box-shadow: 0 1px 7px #e7e8ef;
+    border: 1.2px solid #e8eafd;
+    margin-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+.fb-detail-price-title {
+    font-size: 1.07rem;
+    font-weight: 700;
+    color: #253050;
+    margin-bottom: 0.7rem;
+}
+.fb-detail-price-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 1rem;
+    font-size: 1.04rem;
     color: #313c4e;
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.13rem;
 }
-.flight-booking-price-link {
+.fb-detail-price-row.fb-detail-price-total {
+    font-size: 1.13rem;
+    font-weight: 700;
+    color: #193866;
+    border-top: 1.2px solid #eee8cf;
+    padding-top: 0.7rem;
+    margin-top: 0.7rem;
+}
+.fb-detail-price-link {
     background: #fff;
     color: #2663d7;
     border: 1.1px solid #2663d7;
     font-weight: 600;
     font-size: 1.03rem;
     border-radius: 9px;
-    padding: 0.4rem 1.1rem;
+    padding: 0.47rem 1.1rem;
     cursor: pointer;
     margin-top: 0.8rem;
     display: block;
     text-align: center;
 }
-.flight-booking-loading,
-.flight-booking-error {
+.fb-detail-loading,
+.fb-detail-error {
     font-size: 1.15rem;
     text-align: center;
     color: #2663d7;
@@ -256,8 +530,36 @@
     font-weight: 500;
     width: 100%;
 }
-@media (max-width: 900px) {
-    .flight-booking-detail-main { padding: 1rem 0.3rem 1rem 0.3rem; }
-    .flight-booking-actions-row { flex-direction: column; gap: 1.2rem; }
-    .flight-booking-price-breakdown { min-width: 99vw; max-width: 99vw; }
+@media (max-width: 1100px) {
+    .fb-detail-main { flex-direction: column; gap: 2.1rem; }
+    .fb-detail-left-pane { padding-right: 0; }
+    .fb-detail-right-col { margin-top: 0; }
+}
+@media (max-width: 700px) {
+    .fb-detail-main { padding: 1rem .2rem; }
+    .fb-detail-img img { max-width: 99vw; }
+    .fb-detail-right-col { min-width: 0; max-width: 99vw; }
+}
+.fb-detail-weather {
+    margin-top: 1.2rem;
+    padding: 1rem;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 1px 7px #e8e8e8;
+    border: 1px solid #dee1fd;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.fb-detail-weather-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.fb-detail-weather img {
+    width: 64px;
+    height: 64px;
 }

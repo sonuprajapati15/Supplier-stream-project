@@ -6,6 +6,7 @@ import ProgressBar from "../progess-bar/ProgressBar";
 
 // @ts-ignore
 import {decryptAndDecompress} from '../../decrypt/decryptAndDecompress';
+import NewsSection from "../NewsSection";
 
 const sortOptions = ["Smart Mix", "Price Low to High", "Price High to Low"];
 
@@ -196,78 +197,81 @@ const FlightListing: React.FC = () => {
     }, [applyFilters]);
 
     return (
-        <div className="flight-listing-outer">
-            <div className="flight-search-outer">
-                <FlightSearch/>
-            </div>
-            <div className="flight-listing-toolbar">
-                <div className="flight-listing-filters">
-                    {filterOptions.map(opt => (
-                        <div className="flight-listing-filter" key={opt.key}>
-                            <select
-                                value={selectedFilters[opt.key] || ""}
-                                onChange={(e) => handleFilterChange(opt.key, e.target.value)}
-                            >
-                                <option value="" disabled>Select {opt.key}</option>
-                                {opt.values.map((val) => (
-                                    <option key={val} value={val}>{val}</option>
-                                ))}
-                            </select>
-                        </div>
-                    ))}
+        <div className="flight-listing-news-outer sticky">
+            <div className="flight-listing-outer">
+                <div className="flight-search-outer">
+                    <FlightSearch/>
                 </div>
-                <div className="flight-listing-sort">
-                    <label htmlFor="sortby">Sort by</label>
-                    <select id="sortby" value={selectedSortOption} onChange={handleSortChange}>
-                        {sortOptions.map(opt => (
-                            <option key={opt}>{opt}</option>
+                <div className="flight-listing-toolbar">
+                    <div className="flight-listing-filters">
+                        {filterOptions.map(opt => (
+                            <div className="flight-listing-filter" key={opt.key}>
+                                <select
+                                    value={selectedFilters[opt.key] || ""}
+                                    onChange={(e) => handleFilterChange(opt.key, e.target.value)}
+                                >
+                                    <option value="" disabled>Select {opt.key}</option>
+                                    {opt.values.map((val) => (
+                                        <option key={val} value={val}>{val}</option>
+                                    ))}
+                                </select>
+                            </div>
                         ))}
-                    </select>
+                    </div>
+                    <div className="flight-listing-sort">
+                        <label htmlFor="sortby">Sort by</label>
+                        <select id="sortby" value={selectedSortOption} onChange={handleSortChange}>
+                            {sortOptions.map(opt => (
+                                <option key={opt}>{opt}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <div className="flight-listing-section">
-                <div className="flight-listing-section-header">
-                    <div>
-                        <h3>Select departing flights</h3>
-                        <span className="flight-benchmark">Your company’s travel policy benchmark for this trip is <b> Rs. 8000</b></span>
-                        <a href="#" className="flight-company-msg">View company messages</a>
+                <div className="flight-listing-section">
+                    <div className="flight-listing-section-header">
+                        <div>
+                            <h3>Select departing flights</h3>
+                            <span className="flight-benchmark">Your company’s travel policy benchmark for this trip is <b> Rs. 8000</b></span>
+                            <a href="#" className="flight-company-msg">View company messages</a>
+                        </div>
+                        <div className="flight-listing-fare-tabs">
+                            {fareTabs.map(tab => (
+                                <button
+                                    key={tab.key}
+                                    className={`flight-fare-tab${selectedFareTab === tab.label ? " active" : ""}`}
+                                    onClick={() => setSelectedFareTab(tab.label)}
+                                >
+                                    <span>{tab.label}</span>
+                                    <div className="flight-fare-desc">{tab.desc}</div>
+                                </button>
+                            ))}
+                        </div>
                     </div>
-                    <div className="flight-listing-fare-tabs">
-                        {fareTabs.map(tab => (
-                            <button
-                                key={tab.key}
-                                className={`flight-fare-tab${selectedFareTab === tab.label ? " active" : ""}`}
-                                onClick={() => setSelectedFareTab(tab.label)}
-                            >
-                                <span>{tab.label}</span>
-                                <div className="flight-fare-desc">{tab.desc}</div>
-                            </button>
+                    {loading && (
+                        <div className="flight-listing-loading">
+                            <ProgressBar/>
+                        </div>
+                    )}
+                    <div className="flight-listing-cards">
+                        {flights.map((flight: any) => (
+                            <FlightCard
+                                key={flight.flightId}
+                                flight={flight}
+                            />
                         ))}
                     </div>
                 </div>
-                {loading && (
-                    <div className="flight-listing-loading">
-                        <ProgressBar/>
-                    </div>
+                {showPopup && (
+                    <div className="flight-listing-popup">Flights loaded successfully!</div>
                 )}
-                <div className="flight-listing-cards">
-                    {flights.map((flight: any) => (
-                        <FlightCard
-                            key={flight.flightId}
-                            flight={flight}
-                        />
-                    ))}
-                </div>
+                {showScrollToTop && (
+                    <button className="scroll-to-top" onClick={scrollToTop}>
+                        ⬆
+                    </button>
+                )}
             </div>
-            {showPopup && (
-                <div className="flight-listing-popup">Flights loaded successfully!</div>
-            )}
-            {showScrollToTop && (
-                <button className="scroll-to-top" onClick={scrollToTop}>
-                    ⬆
-                </button>
-            )}
+            <NewsSection place={to} />
         </div>
     );
 };

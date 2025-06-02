@@ -33,7 +33,8 @@ const FlightCard: React.FC<{
             <div className="flight-listing-card">
                 <div className="flight-labels">
                     {flight.ecoFriendly === "Yes" && <span className="flight-label-green">Greener flight</span>}
-                    {flight.shortest && <span className="flight-label-short">Shortest flight</span>}
+                    {flight.vendor_name === "Amadeus" && <span className="flight-label-blue">{flight.vendor_name}</span>}
+                    {flight.vendor_name === "Sabre" && <span className="flight-label-orange">{flight.vendor_name}</span>}
                 </div>
                 <div className="flight-card-main">
                     <div className="flight-airline-logo-wrap">
