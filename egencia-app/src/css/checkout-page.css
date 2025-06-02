@@ -2,7 +2,7 @@
     display: flex;
     gap: 2.5rem;
     padding: 2.5rem 2rem 2.5rem 4rem;
-    background: linear-gradient(135deg, #fffbe6 70%, #fffde8 100%);
+    background: linear-gradient(135deg, #eae1b3 70%, #e7e4c6 100%);
     min-height: 100vh;
 }
 .checkout-left {

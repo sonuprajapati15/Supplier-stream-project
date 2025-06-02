@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import FlightSearch from "./flight/FlightSearch";
 import "../css/theme-toggle.css";
 import "../css/home-page.css";
@@ -9,6 +9,20 @@ import "../css/index.css";
 
 const Home: React.FC = () => {
     const [tab, setTab] = useState<"flights" | "hotels" | "trains" | "cars">("flights");
+    const [upcomingTrips, setUpcomingTrips] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch("http://localhost:9000/supplier/stream/all/booking?userId=1234")
+            .then((res) => res.json())
+            .then((data) => {
+                const upcoming = data.upcoming || [];
+                setUpcomingTrips(upcoming.slice(0, 3)); // Pick top 3 entries
+                setLoading(false);
+            })
+            .catch(() => setLoading(false));
+    }, []);
 
     return (
         <div className="home-page">
@@ -17,7 +31,7 @@ const Home: React.FC = () => {
                     {name: "flights", icon: "✈️"},
                     {name: "hotels", icon: "🏨"},
                     {name: "trains", icon: "🚆"},
-                    {name: "cars", icon: "🚗"}
+                    {name: "cars", icon: "🚗"},
                 ].map(({name, icon}) => (
                     <button
                         key={name}
@@ -35,24 +49,27 @@ const Home: React.FC = () => {
             <div className="home-widgets">
                 <section className="upcoming-trips">
                     <h2>Upcoming trips</h2>
-                    <div className="trip-cards">
-                        <div className="trip-card">
-                            <img src="/trip1.jpg" alt="Portland"/>
-                            <div>
-                                <strong>Portland</strong>
-                                <div>Fri, May 30, 2025</div>
-                                <button>Add to trip</button>
-                            </div>
+                    {loading ? (
+                        <div>Loading...</div>
+                    ) : (
+                        <div className="trip-cards">
+                            {upcomingTrips.map((trip, index) => (
+                                <div className="trip-card" key={index}>
+                                    <img src={trip.cityImage || trip.bgImage} alt={trip.to}/>
+                                    <div>
+                                        {trip.from && trip.to ? (
+                                            <>
+                                                <strong>{trip.from}</strong> → <strong>{trip.to}</strong>
+                                            </>
+                                        ) : (
+                                            <strong>{trip.place}</strong>
+                                        )}
+                                        <div>{new Date(trip.date).toLocaleDateString()}</div>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                        <div className="trip-card">
-                            <img src="/trip2.jpg" alt="Mexico City"/>
-                            <div>
-                                <strong>Mexico City</strong>
-                                <div>Wed, Sep 10, 2025</div>
-                                <button>Add to trip</button>
-                            </div>
-                        </div>
-                    </div>
+                    )}
                 </section>
                 <section className="recommended">
                     <h2>Recommended for you</h2>

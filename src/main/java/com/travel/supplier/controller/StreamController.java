@@ -71,6 +71,11 @@ public class StreamController {
         return new ResponseEntity<>(amadeusCaller.fetchAllBookings(userId), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/stream/bookings/byTicketNo", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> fetchBookingByBookingId(@RequestParam("ticketNo") String ticketNo) {
+        return new ResponseEntity<>(amadeusCaller.fetchBookingByTicketNo(ticketNo), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/stream/all/cities", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<JsonNode> streamAllCities(@RequestParam(value = "from", required = false) String from,
                                           @RequestParam(value = "keyword", required = true) String keyword) {

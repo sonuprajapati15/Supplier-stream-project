@@ -66,7 +66,11 @@ const FlightCheckoutPage: React.FC = () => {
     const chooseFare = flight.chooseFare || {};
 
     return (
-        <div className="checkout-layout">
+        <div className="checkout-layout" style={{
+            backgroundImage: `url('/images/checkout-bg.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+        }}>
             <div className="checkout-left">
                 <h2 className="checkout-title">Complete your booking</h2>
                 <div className="checkout-date-traveler">
@@ -132,8 +136,7 @@ const FlightCheckoutPage: React.FC = () => {
             <div className="checkout-right">
                 <div className="flight-summary-card">
                     <div className="flight-summary-img">
-                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=compress&w=700"
-                             alt="Paris"/>
+                        <img src={flight.cityImage} alt="Paris"/>
                     </div>
                     <div className="flight-summary-content">
                         <div className="flight-summary-title">
@@ -318,7 +321,7 @@ const PassengerModal: React.FC<{ onClose: () => void; onBook: () => void }> = ({
     );
 };
 
-const STAGES = ["Locking", "Processing", "Confirming", "Finalizing Payment", "Completed"];
+const STAGES = ["Seat Locking", "Processing", "Confirming", "Finalizing Payment", "Completed"];
 const BookingProgress: React.FC<{ stages: number }> = ({stages}) => (
     <div className="booking-progress-overlay">
         <div className="booking-progress-modal">

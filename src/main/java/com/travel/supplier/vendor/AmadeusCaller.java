@@ -128,5 +128,9 @@ public class AmadeusCaller implements VendorCaller {
                     }
                 });
     }
+
+    public String fetchBookingByTicketNo(String ticketNo) {
+        return restTemplate.getForObject(bookingEndpoint + "/byTicketNo?ticketId=" + ticketNo, String.class);
+    }
 }
 
