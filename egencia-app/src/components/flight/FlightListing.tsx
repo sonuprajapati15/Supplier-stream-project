@@ -52,6 +52,7 @@ const FlightListing: React.FC = () => {
     const [flights, setFlights] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
+    const [weather, setWeather] = useState<any>(null);
     const [filterOptions, setFilterOptions] = useState<{ key: string; values: string[] }[]>([
         {key: "Airlines", values: []}
     ]);
@@ -59,9 +60,17 @@ const FlightListing: React.FC = () => {
     const handleScroll = () => {
         setShowScrollToTop(window.scrollY > 300);
     };
+
     const scrollToTop = () => {
         window.scrollTo({top: 0, behavior: "smooth"});
     };
+
+    useEffect(() => {
+        if (!to) return;
+        fetch(`http://localhost:9000/supplier/v1/weather?place=${to}`)
+            .then(res => res.json())
+            .then(setWeather);
+    });
 
     const addFilterData = async (flights: any[]) => {
         const airlineSet = new Set(flights.map((v: any) => v.airline.name));
@@ -76,7 +85,6 @@ const FlightListing: React.FC = () => {
                     : (sortedPrices[sortedPrices.length / 2 - 1] + sortedPrices[sortedPrices.length / 2]) / 2;
         setFilterOptions([
             {key: "Airlines", values: Array.from(airlineSet)},
-            {key: "Stops", values: ["Nonstop", "1 Stop", "2+ Stops"]},
             {key: "Times", values: ["Morning", "Afternoon", "Evening", "Night"]},
             {
                 key: "Price",
@@ -227,7 +235,6 @@ const FlightListing: React.FC = () => {
                         </select>
                     </div>
                 </div>
-
                 <div className="flight-listing-section">
                     <div className="flight-listing-section-header">
                         <div>
@@ -253,7 +260,7 @@ const FlightListing: React.FC = () => {
                             <ProgressBar/>
                         </div>
                     )}
-                    <div className="flight-listing-cards">
+                    <div className="flight-listing-cards" style={{ maxHeight: "2000px", overflowY: "auto" }}>
                         {flights.map((flight: any) => (
                             <FlightCard
                                 key={flight.flightId}
@@ -271,7 +278,22 @@ const FlightListing: React.FC = () => {
                     </button>
                 )}
             </div>
-            <NewsSection place={to} />
+            <div>
+                {weather && (
+                    <div className="fb-detail-weather">
+                        <h3>Weather in {weather.location.name}</h3>
+                        <div className="fb-detail-weather-info">
+                            <img src={weather.current.condition.icon} alt={weather.current.condition.text}/>
+                        </div>
+                        <div>
+                            <div><b>Condition: </b> {weather.current.condition.text}</div>
+                            <div><b>Temperature: </b> {weather.current.temp_c}°C</div>
+                            <div><b>Wind: </b> {weather.current.wind_kph} kph ({weather.current.wind_dir})</div>
+                        </div>
+                    </div>
+                )}
+                <NewsSection place={to} />
+            </div>
         </div>
     );
 };

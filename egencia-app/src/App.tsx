@@ -13,7 +13,7 @@ const App: React.FC = () => (
     <Router>
         <div className="app-outer">
             <Header/>
-            <main style={{flex: 1, overflow: "auto", marginBottom: "60px", width: "100%"}}>
+            <main style={{flex: 1, marginBottom: "60px"}}>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/flight/listing" element={<FlightListing/>}/>

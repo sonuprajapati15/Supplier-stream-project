@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "../css/news-listing.css"
 
-const NewsSection: React.FC<{ place: string }> = ({ place }) => {
+const NewsSection: React.FC<{ place: string }> = ({place}) => {
     const [news, setNews] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -23,11 +23,11 @@ const NewsSection: React.FC<{ place: string }> = ({ place }) => {
 
     return (
         <div className="news-section">
-            <h3> News Articles for {place}</h3>
-            <div className="news-list">
+            <h3 style={{color: "rgba(1,70,172,0.68)"}}> News Articles for {place}</h3>
+            <div className="news-list" style={{maxHeight: "2000px", overflowY: "auto"}}>
                 {news.map((article, index) => (
                     <div key={index} className="news-item">
-                        <img src={article.urlToImage} alt={article.title} className="news-image" />
+                        <img src={article.urlToImage} alt={article.title} className="news-image"/>
                         <div className="news-content">
                             <div className="news-meta">
                                 <span className="news-time">{new Date(article.publishedAt).toLocaleString()}</span>

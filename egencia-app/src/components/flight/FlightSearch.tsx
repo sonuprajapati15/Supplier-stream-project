@@ -34,7 +34,7 @@ const icons = {
         </svg>
     ),
     user: (
-        <svg width="18" height="18" fill="none" stroke="#2663d7" strokeWidth="2" strokeLinecap="round"
+        <svg width="18" height="18" fill="none" stroke="#1a232f" strokeWidth="2" strokeLinecap="round"
              strokeLinejoin="round" viewBox="0 0 24 24">
             <circle cx="12" cy="7" r="4"/>
             <path d="M5.5 21c.7-3.5 12.3-3.5 13 0"/>
@@ -151,7 +151,10 @@ const FlightSearch: React.FC = () => {
     };
 
     return (
-        <form className="fs-box" onSubmit={onSearch} autoComplete="off">
+        <form
+            className="fs-box"
+            onSubmit={onSearch}
+            autoComplete="off">
             <div className="fs-row">
                 <div className="fs-chip-group">
                     <select className="fs-chip" value={tripType} onChange={e => setTripType(e.target.value)}>
@@ -184,7 +187,11 @@ const FlightSearch: React.FC = () => {
                                 onChange={(e) => {
                                     setFrom(e.target.value);
                                     fetchCities(e.target.value, setFromSuggestions, "");
-                                    if (validation.from) setValidation(v => ({ ...v, from: undefined, alert: undefined }));
+                                    if (validation.from) setValidation(v => ({
+                                        ...v,
+                                        from: undefined,
+                                        alert: undefined
+                                    }));
                                 }}
                                 autoComplete="off"
                             />
@@ -224,7 +231,7 @@ const FlightSearch: React.FC = () => {
                                 onChange={(e) => {
                                     setTo(e.target.value);
                                     fetchCities(e.target.value, setToSuggestions, from);
-                                    if (validation.to) setValidation(v => ({ ...v, to: undefined, alert: undefined }));
+                                    if (validation.to) setValidation(v => ({...v, to: undefined, alert: undefined}));
                                 }}
                                 autoComplete="off"
                             />
@@ -255,7 +262,11 @@ const FlightSearch: React.FC = () => {
                                     value={date}
                                     onChange={(e) => {
                                         setDate(e.target.value);
-                                        if (validation.date) setValidation(v => ({ ...v, date: undefined, alert: undefined }));
+                                        if (validation.date) setValidation(v => ({
+                                            ...v,
+                                            date: undefined,
+                                            alert: undefined
+                                        }));
                                     }}
                                     className="fs-date-input"
                                     onClick={(e) => e.stopPropagation()} // Prevent parent click event
@@ -291,7 +302,7 @@ const FlightSearch: React.FC = () => {
                 </div>
             )}
             <button type="submit" className="fs-search-btn">
-                Search Flights
+                SEARCH
             </button>
         </form>
     );

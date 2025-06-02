@@ -4,10 +4,17 @@
     border-radius: 12px;
     box-shadow: 0 1px 7px 0 rgba(38,99,215,0.08);
     display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1rem 1rem 0.6rem 0.8rem;
+    position: relative;
+}
+
+.flight-listing-card-inner {
+    background: #fff;
+    display: flex;
     flex-direction: row;
     gap: 0.4rem;
-    padding: 1rem 1.5rem 1rem 0.9rem;
-    position: relative;
 }
 
 .flight-listing-outer-card {
@@ -38,8 +45,8 @@
     display: inline-block;
 }
 .flight-label-blue {
-    background: #0b49ce;
-    color: #ffffff;
+    background: #ffffff;
+    color: rgb(0, 120, 245);
     padding: 0.14rem 0.7rem;
     border-radius: 6px;
     font-weight: 300;
@@ -49,8 +56,8 @@
 }
 
 .flight-label-orange {
-    background: #c75706;
-    color: #ffffff;
+    background: #ffffff;
+    color: #ef6226;
     padding: 0.14rem 0.7rem;
     border-radius: 6px;
     font-weight: 300;
@@ -157,10 +164,7 @@
     font-weight: 300;
     font-size: 0.8rem;
     cursor: pointer;
-    margin-bottom: 0;
-    text-align: left;
-    align-items: baseline;
-    padding-left: 10px;
+    text-align: center;
 }
 .flight-view-details:hover {
     text-decoration: underline;
@@ -175,11 +179,13 @@
 }
 
 .flight-fare-cell {
-    background: #f9fafd;
+    background: #cbcbcb;
     border: 2px solid #f9fafd;
-    border-radius: 8px;
-    min-width: 110px;
-    min-height: 85px;
+    border-radius: 20px;
+    min-width: 90px;
+    max-width: 90px;
+    max-height: 75px;
+    min-height: 75px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -192,17 +198,18 @@
     cursor: pointer;
 }
 .flight-fare-cell.selected {
-    border: 2.6px solid #2663d7;
-    background: #f1f6fe;
+    border: 2.6px solid #093c9e;
+    background: #ffffff;
 }
 .flight-fare-price {
     font-size: 1.18rem;
-    font-weight: 700;
-    color: #193866;
+    font-weight: 800;
+    color: #0559e3;
 }
 .flight-fare-type {
-    font-size: 1rem;
-    color: #7c8495;
+    font-size: 1.1rem;
+    margin-top: 2px;
+    color: #54565a;
     font-weight: 500;
 }
 .flight-fare-ow {
@@ -211,8 +218,8 @@
 }
 .flight-fare-desc {
     font-size: 0.94rem;
-    color: #888;
-    margin-top: 0.2rem;
+    color: #3e3e3e;
+    margin-top: 0.4rem;
 }
 
 /* Fare details expanded row */
