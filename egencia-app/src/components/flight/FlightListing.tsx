@@ -6,7 +6,8 @@ import ProgressBar from "../progess-bar/ProgressBar";
 
 // @ts-ignore
 import {decryptAndDecompress} from '../../decrypt/decryptAndDecompress';
-import NewsSection from "../NewsSection";
+import NewsSection from "../other/NewsSection";
+import WeatherInfo from "../other/WeatherInfo";
 
 const sortOptions = ["Smart Mix", "Price Low to High", "Price High to Low"];
 
@@ -65,12 +66,12 @@ const FlightListing: React.FC = () => {
         window.scrollTo({top: 0, behavior: "smooth"});
     };
 
-    useEffect(() => {
-        if (!to) return;
-        fetch(`http://localhost:9000/supplier/v1/weather?place=${to}`)
-            .then(res => res.json())
-            .then(setWeather);
-    });
+     useEffect(() => {
+         if (!to) return;
+         fetch(`http://localhost:9000/supplier/v1/weather?place=${to}`)
+             .then(res => res.json())
+             .then(setWeather);
+     }, []); // Empty dependency array ensures the effect runs only once
 
     const addFilterData = async (flights: any[]) => {
         const airlineSet = new Set(flights.map((v: any) => v.airline.name));
@@ -278,20 +279,8 @@ const FlightListing: React.FC = () => {
                     </button>
                 )}
             </div>
-            <div>
-                {weather && (
-                    <div className="fb-detail-weather">
-                        <h3>Weather in {weather.location.name}</h3>
-                        <div className="fb-detail-weather-info">
-                            <img src={weather.current.condition.icon} alt={weather.current.condition.text}/>
-                        </div>
-                        <div>
-                            <div><b>Condition: </b> {weather.current.condition.text}</div>
-                            <div><b>Temperature: </b> {weather.current.temp_c}°C</div>
-                            <div><b>Wind: </b> {weather.current.wind_kph} kph ({weather.current.wind_dir})</div>
-                        </div>
-                    </div>
-                )}
+            <div style={{maxWidth: '35%'}}>
+                {weather && <WeatherInfo weather={weather}/>}
                 <NewsSection place={to} />
             </div>
         </div>

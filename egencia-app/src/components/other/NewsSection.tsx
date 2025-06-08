@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "../css/news-listing.css"
+import "../../css/news-listing.css"
 
 const NewsSection: React.FC<{ place: string }> = ({place}) => {
     const [news, setNews] = useState<any[]>([]);

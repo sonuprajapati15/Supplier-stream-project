@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../../css/flight-booking-detail.css";
+import WeatherInfo from "../other/WeatherInfo";
 
 function formatDateTime(dateStr: string, time?: string) {
     if (!dateStr) return "";
@@ -190,6 +191,7 @@ const FlightBookingDetailModern: React.FC<{ ticketNo?: string }> = ({ticketNo}) 
                             <a href="#" className="fb-detail-segment-manage-link">Manage flight &gt;</a>
                         </div>
                     </div>
+
                 </div>
 
                 {/* RIGHT PANEL */}
@@ -215,19 +217,7 @@ const FlightBookingDetailModern: React.FC<{ ticketNo?: string }> = ({ticketNo}) 
                             Trip messages
                         </button>
                     </div>
-                    {weather && (
-                        <div className="fb-detail-weather">
-                            <h3>Weather in {weather.location.name}</h3>
-                            <div className="fb-detail-weather-info">
-                                <img src={weather.current.condition.icon} alt={weather.current.condition.text}/>
-                            </div>
-                            <div>
-                                <div><b>Condition: </b> {weather.current.condition.text}</div>
-                                <div><b>Temperature: </b> {weather.current.temp_c}°C</div>
-                                <div><b>Wind: </b> {weather.current.wind_kph} kph ({weather.current.wind_dir})</div>
-                            </div>
-                        </div>
-                    )}
+                    {weather && <WeatherInfo weather={weather}/>}
                     <div className="fb-detail-price-card">
                         <div className="fb-detail-price-title">Price breakdown</div>
                         {/* Fare Components breakdown */}
