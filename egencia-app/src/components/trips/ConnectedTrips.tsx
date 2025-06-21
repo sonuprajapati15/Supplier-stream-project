@@ -151,7 +151,7 @@ const ConnectedTripsPage: React.FC = () => {
                         style={{marginLeft: '7px', verticalAlign: 'middle' }}
                     />}
                     {booking.status.toLowerCase() === 'upcoming' && <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQw4HaWpbnG0xMk8ZvPQSsH3OTkWo6qsrWEQ&s"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC5Gp183N2Hw21RQjWK-qXa37A-WeZEReQ6g&s"
                         alt="Right Tick"
                         width="18px"
                         height="18px"
@@ -175,6 +175,7 @@ const ConnectedTripsPage: React.FC = () => {
                                 width="80px"
                                 src={booking.bgImage}
                                 alt={booking.cityImage}
+                                className="trip-groups-container"
                                 style={{
                                     margin: '10px 15px', // Sets top/bottom margin to 10px and left/right margin to 15px
                                     background: '#f1f1f1',
@@ -256,11 +257,7 @@ const ConnectedTripsPage: React.FC = () => {
                     <span className="trips-card-icon">✈️</span>
                     {booking.lobName.toLowerCase() === 'flight' && (
                         <div>
-                            <span className="trips-card-title">{booking.from} → {booking.to}</span>
-                            <span className="trips-card-title-detail">Booking ID:- {booking.ticketNo}</span>
-                            {booking.cabinClass && (
-                                <span className="trips-card-title-detail">Class:- <b>{booking.cabinClass}</b></span>
-                            )}
+                            <span className="trips-card-title">{booking.from}</span> <span className="trips-card-title-to"> → </span> <span className="trips-card-title-to">{booking.to}</span>
                         </div>
                     )}
                 </div>
@@ -269,39 +266,57 @@ const ConnectedTripsPage: React.FC = () => {
                         <div>
                             <div className="trips-card-dates">
                                 <div>
-                                    <b>From</b>
                                     <br />
                                     {formatDate(booking.date)} {booking.departureTime}
                                     <br />
-                                    {booking.from}
                                 </div>
                                 <div>
-                                    <b>To</b>
                                     <br />
                                     {formatDate(booking.date)} {booking.arrivalTime}
                                     <br />
-                                    {booking.to}
-                                </div>
-                                <div>
-                                    <b>Flight</b>
-                                    <br />
-                                    {booking.airline?.name} ({booking.flightNumber})
                                 </div>
                             </div>
                         </div>
                     )}
                     {booking.status.toLowerCase() === "cancelled" && (
-                        <div className="trips-card-error">Your flight booking has been cancelled.</div>
+                        <div className="trips-card-error">
+                            <div className="trips-card-note" style={{background: "#e3e3e3", color:"#000000"}}>
+                                <ul>
+                                    <li>Your Flight Booking Had Been Cancelled.
+                                        <ul>
+                                            <li>Refund Processed</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     )}
-                    <span className="trips-badge trips-badge-cancelled">Refund Processed</span>
+                    {booking.status.toLowerCase() === "failed" && (
+                        <div className="trips-card-error">
+                            <div className="trips-card-note" style={{background: "#ffe5e0"}}>
+                                <ul>
+                                    <li>This Booking Had been failed.
+                                        <ul>
+                                            <li>Refund will Process on Applicable fares</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
             <div className="trip-card-actions">
-                <button
-                    className="btn-primary" style={{background: "#000"}}
+                {booking.status.toLowerCase() == 'failed' && (<button
+                    className="btn-primary" style={{background: "#363535"}}
                     onClick={() => navigate(`/trip-detail/booking?ticketNo=${booking.ticketNo}`)}>
                     View Details
-                </button>
+                </button>)}
+                {booking.status.toLowerCase() == 'cancelled' && (<button
+                    className="btn-primary" style={{background: "#f60000"}}
+                    onClick={() => navigate(`/trip-detail/booking?ticketNo=${booking.ticketNo}`)}>
+                    View Details
+                </button>)}
             </div>
         </div>
     );
@@ -326,7 +341,7 @@ const ConnectedTripsPage: React.FC = () => {
         }
 
         return (
-            <div className="trip-groups-container">
+            <div className="trip-groups">
                 {tripGroups.map((group, i) => (
                     <div key={i} className="trip-group">
                         {group.map((trips, j) => (
@@ -339,20 +354,13 @@ const ConnectedTripsPage: React.FC = () => {
                                     ))}
                                 {(activeTab === 'upcoming' || activeTab === 'complete') && (
                                     <div className="trip-bookings-card">
-                                        <img
-                                            src={trips[0]?.bgImage || ''}
-                                            alt={trips[0]?.from || 'City'}
-                                            width="100%"
-                                            height="80px"
-                                            style={{ borderRadius: '15px 15px 0 0' }}
-                                        />
                                         <div
+                                            className="trip-groups-container"
                                             style={{
                                                 display: 'flex',
                                                 flexDirection: 'row',
                                                 alignItems: 'center',
                                                 padding: '10px 15px',
-                                                backgroundColor: "#fdfdfd"
                                             }}
                                         >
                                             <img
@@ -378,24 +386,26 @@ const ConnectedTripsPage: React.FC = () => {
                                                 </div>
                                             </div>
                                         ))}
-                                        <div className="vertical-line-end" />
-                                        {activeTab === 'complete' && (
-                                            <div className="trip-safe-message">
-                                                <img
-                                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Eo_circle_green_checkmark.svg/1200px-Eo_circle_green_checkmark.svg.png"
-                                                    alt="Right Tick"
-                                                    width="20px"
-                                                    height="20px"
-                                                    style={{
-                                                        marginLeft: '12px',
-                                                        marginRight: '8px',
-                                                        marginBottom: "12px",
-                                                        verticalAlign: 'middle'
-                                                    }}
-                                                />
-                                                Hope you have a Safe and Wonderful trip
-                                            </div>
-                                        )}
+                                        <div style={{marginBottom:"10px"}}>
+                                            {activeTab === 'complete' && (<div className="vertical-line-end" />)}
+                                            {activeTab === 'complete' && (
+                                                <div className="trip-safe-message">
+                                                    <img
+                                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Eo_circle_green_checkmark.svg/1200px-Eo_circle_green_checkmark.svg.png"
+                                                        alt="Right Tick"
+                                                        width="20px"
+                                                        height="20px"
+                                                        style={{
+                                                            marginLeft: '12px',
+                                                            marginRight: '8px',
+                                                            marginBottom: "12px",
+                                                            verticalAlign: 'middle'
+                                                        }}
+                                                    />
+                                                    Hope you have a Safe and Wonderful trip
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 )}
                             </React.Fragment>
