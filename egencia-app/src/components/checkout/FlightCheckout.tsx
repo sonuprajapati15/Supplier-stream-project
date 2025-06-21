@@ -103,8 +103,8 @@ const FlightCheckoutPage: React.FC = () => {
                             </span>
                     <span className="checkout-divider">|</span>
                     <span>
-                                <span role="img" aria-label="person">🧑‍💼</span> 1 Traveler
-                            </span>
+                        <span role="img" aria-label="person">🧑‍💼</span> 1 Traveler
+                    </span>
                 </div>
                 <div className="checkout-card">
                     <div className="checkout-card-header">
@@ -112,9 +112,6 @@ const FlightCheckoutPage: React.FC = () => {
                     </div>
                     <div className="checkout-seat-img">
                         <img src={flight.image} alt="Seat selection"/>
-                    </div>
-                    <div className="checkout-seat-segments">
-                        <div>Geneva - Mumbai | Not available</div>
                     </div>
                     <div className="checkout-seat-warning">
                         <span className="checkout-warning-icon">⚠️</span>

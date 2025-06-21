@@ -281,7 +281,7 @@ const FlightListing: React.FC = () => {
             </div>
             <div style={{maxWidth: '35%'}}>
                 {weather && <WeatherInfo weather={weather}/>}
-                <NewsSection place={to} />
+                {/*<NewsSection place={to} />*/}
             </div>
         </div>
     );

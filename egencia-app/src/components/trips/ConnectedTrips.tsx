@@ -1,0 +1,433 @@
+import React, {useEffect, useState} from 'react';
+import '../../css/connected-trips-page.css';
+import {useNavigate} from "react-router-dom";
+
+
+interface Airline {
+    logo: string;
+    name: string;
+}
+
+interface ChooseFareComponent {
+    name: string;
+    price: number;
+}
+
+interface ChooseFare {
+    components: {
+        [key: string]: ChooseFareComponent;
+    };
+    total_price: number;
+}
+
+interface BookingItem {
+    _id: string;
+    age: number;
+    aircraftType?: string;
+    airline?: Airline;
+    arrivalTime: string;
+    baggage: string;
+    bgImage?: string;
+    boardingTime: string;
+    cabinClass: string;
+    cancellationPolicy: string;
+    changePolicy: string;
+    checkInCounter: string;
+    chooseFare: ChooseFare;
+    cityImage?: string;
+    covidSafety: string;
+    date: string;
+    date_time: string;
+    departureTime: string;
+    duration: string;
+    ecoFriendly: string;
+    email: string;
+    entertainment: string;
+    extraLegroom: string;
+    fareCategories: any;
+    fareClass: string;
+    fareId: number;
+    fareType: string;
+    flightId: string;
+    flightNumber: string;
+    flightType: string;
+    from: string;
+    gate: string;
+    image?: string;
+    infantPolicy: string;
+    lastUpdated: string;
+    layovers: any;
+    lobName: string;
+    loungeAccess: string;
+    meal: string;
+    name: string;
+    onTimePerformance: string;
+    petPolicy: string;
+    phone: string;
+    pnrNo: string;
+    powerOutlet: string;
+    price: number;
+    priorityBoarding: string;
+    provider: string;
+    rating: number;
+    recliningAngle: string;
+    reviewsCount: number;
+    seatPitch: string;
+    seatType: string;
+    seatWidth: string;
+    status: string;
+    terminal: string;
+    ticketNo: string;
+    to: string;
+    totalStops: number;
+    travel_date: string;
+    update_time: string;
+    usbPort: string;
+    userId: string;
+    vendor_logo: string;
+    vendor_name: string;
+    wifi: string;
+}
+
+type BookingStatus = 'upcoming' | 'complete' | 'cancelled' | 'failed';
+
+interface ApiResponse {
+    cancelled: BookingItem[][][];
+    complete: BookingItem[][][];
+    failed: BookingItem[][][];
+    upcoming: BookingItem[][][];
+}
+
+
+function formatDate(dateStr: string) {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    return d.toLocaleDateString(undefined, {weekday: "short", day: "2-digit", month: "short", year: "numeric"});
+}
+
+const TABS = [
+    {key: 'upcoming', label: 'Upcoming'},
+    {key: 'complete', label: 'Completed'},
+    {key: 'cancelled', label: 'Cancelled'},
+    {key: 'failed', label: 'Failed'}
+] as const;
+
+const ConnectedTripsPage: React.FC = () => {
+    const [activeTab, setActiveTab] = useState<BookingStatus>('upcoming');
+    const [bookings, setBookings] = useState<ApiResponse | null>(null);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch('http://localhost:9000/supplier/stream/all/booking?userId=1234')
+            .then(res => res.json())
+            .then(data => {
+                setBookings(data);
+                setLoading(false);
+            });
+    }, []);
+
+    const renderTrip = (booking: BookingItem) => (
+        <div>
+            <div style={{
+                height: `18px`,
+                width: '2px',
+                backgroundColor: '#000000',
+                marginLeft: '15px',
+            }}/>
+            <div style={{display: "flex", flexDirection: 'row', width: "100%"}}>
+                <div>
+                    <div style={{
+                        height: `60px`,
+                        width: '2px',
+                        backgroundColor: '#000000',
+                        marginLeft: '15px',
+                    }}/>
+                    {booking.status.toLowerCase() === 'completed' && <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Eo_circle_green_checkmark.svg/1200px-Eo_circle_green_checkmark.svg.png"
+                        alt="Right Tick"
+                        width="18px"
+                        height="18px"
+                        style={{marginLeft: '7px', verticalAlign: 'middle' }}
+                    />}
+                    {booking.status.toLowerCase() === 'upcoming' && <img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQw4HaWpbnG0xMk8ZvPQSsH3OTkWo6qsrWEQ&s"
+                        alt="Right Tick"
+                        width="18px"
+                        height="18px"
+                        style={{marginLeft: '7px', verticalAlign: 'middle' }}
+                    />}
+                    <div style={{
+                        height: `75px`,
+                        width: '2px',
+                        backgroundColor: '#000000',
+                        marginLeft: '15px',
+                    }}/>
+                </div>
+                <div className="trip-card" key={booking._id}>
+                    <div className={`trip-status ${booking.status.toLowerCase()}`}>
+                        {booking.status.charAt(0) + booking.status.slice(1).toLowerCase()}
+                    </div>
+                    <div className="trip-card-header">
+                        {booking.bgImage && (
+                            <img
+                                height="140px"
+                                width="80px"
+                                src={booking.bgImage}
+                                alt={booking.cityImage}
+                                style={{
+                                    margin: '10px 15px', // Sets top/bottom margin to 10px and left/right margin to 15px
+                                    background: '#f1f1f1',
+                                    objectFit: 'contain',
+                                    border: '1.5px solid #eef2f7',
+                                }}
+                            />
+                        )}
+                        <div className="trip-type">{booking.flightType || booking.lobName}</div>
+                    </div>
+                    <div className="trip-details">
+                        <div>
+                            <div className="trip-city bold">{booking.from}</div>
+                            <div className="trip-time">{booking.departureTime}</div>
+                            <div className="trip-date">{new Date(booking.date).toLocaleDateString(undefined, {
+                                weekday: 'short',
+                                day: '2-digit',
+                                month: 'short',
+                                year: '2-digit'
+                            })}</div>
+                        </div>
+                        <div className="trip-arrow"> → </div>
+                        <div>
+                            <div className="trip-city bold">{booking.to}</div>
+                            <div className="trip-time">{booking.arrivalTime}</div>
+                            <div className="trip-date">{new Date(booking.date).toLocaleDateString(undefined, {
+                                weekday: 'short',
+                                day: '2-digit',
+                                month: 'short',
+                                year: '2-digit'
+                            })}</div>
+                        </div>
+                    </div>
+                    <div style={{flexDirection:"column", marginLeft: '15px', marginRight: '15px'}}>
+                        <div className="trip-booking-id">PNR :-  <span className="bold">{booking.pnrNo}</span></div>
+                        <div className="trip-booking-id">Booking ID:- <span className="bold">{booking.ticketNo}</span></div>
+                    </div>
+                    <div className="trip-card-actions">
+                        {activeTab !== 'complete' && activeTab !== 'cancelled' && (
+                            <button
+                                className="btn-primary"
+                                onClick={() => navigate(`/trip-detail/booking?ticketNo=${booking.ticketNo}`)}>
+                                Manage Booking
+                            </button>
+                        )}
+                        {activeTab === 'complete' && (
+                            <>
+                                <button
+                                    className="btn-primary"
+                                    onClick={() => navigate(`/trip-detail/booking?ticketNo=${booking.ticketNo}`)}>
+                                    View Booking
+                                </button>
+                                <button className="btn-secondary">Download Invoice</button>
+                            </>
+                        )}
+                    </div>
+                </div>
+            </div>
+            <div style={{
+                height: `10px`,
+                width: '2px',
+                backgroundColor: '#000000',
+                marginLeft: '15px',
+            }}/>
+        </div>
+    );
+
+    const bookingCard = (booking: BookingItem) => (
+        <div className="trips-card-outer">
+            <div className="trips-img-outer">
+                <img
+                    src={booking.cityImage}
+                    alt="Description"
+                    style={{ width: "100%", height: "80%", objectFit: "cover", borderRadius: "20px" }}
+                />
+            </div>
+            <div className="trips-card">
+                <div className="trips-card-header">
+                    <span className="trips-card-icon">✈️</span>
+                    {booking.lobName.toLowerCase() === 'flight' && (
+                        <div>
+                            <span className="trips-card-title">{booking.from} → {booking.to}</span>
+                            <span className="trips-card-title-detail">Booking ID:- {booking.ticketNo}</span>
+                            {booking.cabinClass && (
+                                <span className="trips-card-title-detail">Class:- <b>{booking.cabinClass}</b></span>
+                            )}
+                        </div>
+                    )}
+                </div>
+                <div className="trips-card-info">
+                    {booking.lobName.toLowerCase() === 'flight' && (
+                        <div>
+                            <div className="trips-card-dates">
+                                <div>
+                                    <b>From</b>
+                                    <br />
+                                    {formatDate(booking.date)} {booking.departureTime}
+                                    <br />
+                                    {booking.from}
+                                </div>
+                                <div>
+                                    <b>To</b>
+                                    <br />
+                                    {formatDate(booking.date)} {booking.arrivalTime}
+                                    <br />
+                                    {booking.to}
+                                </div>
+                                <div>
+                                    <b>Flight</b>
+                                    <br />
+                                    {booking.airline?.name} ({booking.flightNumber})
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {booking.status.toLowerCase() === "cancelled" && (
+                        <div className="trips-card-error">Your flight booking has been cancelled.</div>
+                    )}
+                    <span className="trips-badge trips-badge-cancelled">Refund Processed</span>
+                </div>
+            </div>
+            <div className="trip-card-actions">
+                <button
+                    className="btn-primary" style={{background: "#000"}}
+                    onClick={() => navigate(`/trip-detail/booking?ticketNo=${booking.ticketNo}`)}>
+                    View Details
+                </button>
+            </div>
+        </div>
+    );
+
+    const renderBookingCard = (booking: BookingItem) => {
+        if (booking.status.toLowerCase() === 'failed' || booking.status.toLowerCase() === 'cancelled') {
+            return bookingCard(booking);
+        }
+        if (booking.status.toLowerCase() === 'completed' || booking.status.toLowerCase() === 'upcoming') {
+            return renderTrip(booking);
+        }
+        return null;
+    };
+
+    const renderTabContent = () => {
+        if (loading) return <div className="loading">Loading...</div>;
+
+        const tripGroups = bookings?.[activeTab] || [];
+        if (!tripGroups.length) {
+            const tabLabel = TABS.find(t => t.key === activeTab)?.label;
+            return <div className="no-trips">No {tabLabel} Trips</div>;
+        }
+
+        return (
+            <div className="trip-groups-container">
+                {tripGroups.map((group, i) => (
+                    <div key={i} className="trip-group">
+                        {group.map((trips, j) => (
+                            <React.Fragment key={j}>
+                                {(activeTab === 'failed' || activeTab === 'cancelled') &&
+                                    trips.map((trip, index) => (
+                                        <div style={{ display: 'flex', flexDirection: 'column' }} key={index}>
+                                            {renderBookingCard(trip)}
+                                        </div>
+                                    ))}
+                                {(activeTab === 'upcoming' || activeTab === 'complete') && (
+                                    <div className="trip-bookings-card">
+                                        <img
+                                            src={trips[0]?.bgImage || ''}
+                                            alt={trips[0]?.from || 'City'}
+                                            width="100%"
+                                            height="80px"
+                                            style={{ borderRadius: '15px 15px 0 0' }}
+                                        />
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                                padding: '10px 15px',
+                                                backgroundColor: "#fdfdfd"
+                                            }}
+                                        >
+                                            <img
+                                                src={trips[0]?.cityImage || ''}
+                                                alt={trips[0]?.from || 'City'}
+                                                width="40px"
+                                                height="40px"
+                                                style={{
+                                                    borderRadius: '50%',
+                                                    objectFit: 'cover',
+                                                    border: '2px solid #eef2f7'
+                                                }}
+                                            />
+                                            <div style={{ padding: '5px', fontWeight: 'bold' }}>
+                                                {trips[0]?.to}
+                                            </div>
+                                        </div>
+                                        <div className="vertical-line" />
+                                        {trips.map((trip, index) => (
+                                            <div style={{ display: 'flex', flexDirection: 'row' }} key={index}>
+                                                <div style={{ paddingLeft: '20px', paddingRight: '15px', width: "100%" }}>
+                                                    {renderBookingCard(trip)}
+                                                </div>
+                                            </div>
+                                        ))}
+                                        <div className="vertical-line-end" />
+                                        {activeTab === 'complete' && (
+                                            <div className="trip-safe-message">
+                                                <img
+                                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Eo_circle_green_checkmark.svg/1200px-Eo_circle_green_checkmark.svg.png"
+                                                    alt="Right Tick"
+                                                    width="20px"
+                                                    height="20px"
+                                                    style={{
+                                                        marginLeft: '12px',
+                                                        marginRight: '8px',
+                                                        marginBottom: "12px",
+                                                        verticalAlign: 'middle'
+                                                    }}
+                                                />
+                                                Hope you have a Safe and Wonderful trip
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </React.Fragment>
+                        ))}
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    return (
+        <div className="trips-page">
+            <header className="trips-header">
+                <h2>My Trips</h2>
+                <button className="add-booking-btn">+ Add Booking</button>
+            </header>
+            <nav className="trips-tabs">
+                {TABS.map(tab => (
+                    <button
+                        key={tab.key}
+                        className={`trips-tab-btn${activeTab === tab.key ? ' active' : ''}`}
+                        onClick={() => setActiveTab(tab.key as BookingStatus)}
+                    >
+                        {tab.label}
+                    </button>
+                ))}
+            </nav>
+            <div className="trips-content">
+                {renderTabContent()}
+            </div>
+        </div>
+    );
+};
+
+export default ConnectedTripsPage;

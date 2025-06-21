@@ -7,7 +7,8 @@ import HotelListing from "./components/hotel/HotelListing";
 import FlightListing from "./components/flight/FlightListing";
 import FlightCheckoutPage from "./components/checkout/FlightCheckout";
 import TripsPage from "./components/trips/TripsPage";
-import FlightBookingDetailPage from "./components/flight/FlightBookingDetailPage"; // add when you migrate Trips
+import FlightBookingDetailPage from "./components/flight/FlightBookingDetailPage";
+import ConnectedTripsPage from "./components/trips/ConnectedTrips"; // add when you migrate Trips
 
 const App: React.FC = () => (
     <Router>
@@ -20,7 +21,7 @@ const App: React.FC = () => (
                     <Route path="/checkout/flight" element={<FlightCheckoutPage/>}/>
                     <Route path="/hotel/listing" element={<HotelListing/>}/>
                     <Route path="/trip-detail/booking" element={<FlightBookingDetailPage/>}/> <Route
-                    path="/trips" element={<TripsPage/>}/>
+                    path="/trips" element={<ConnectedTripsPage/>}/>
                     {/* Add more routes as you migrate more components */}
                 </Routes>
             </main>

@@ -543,7 +543,8 @@
 .fb-detail-weather {
     margin-top: 1.2rem;
     padding: 1rem;
-    background: #ffffff;
+    background: #edf2f3;
+    max-width: 1000px;
     border-radius: 10px;
     box-shadow: 0 1px 7px #e8e8e8;
     border: 1px solid #dee1fd;

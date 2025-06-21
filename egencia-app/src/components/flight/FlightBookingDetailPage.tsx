@@ -19,7 +19,6 @@ const FlightBookingDetailModern: React.FC<{ ticketNo?: string }> = ({ticketNo}) 
     const [flight, setFlight] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [weather, setWeather] = useState<any>(null);
-
     const ticket = ticketNo || new URLSearchParams(window.location.search).get("ticketNo") || "";
 
     useEffect(() => {
