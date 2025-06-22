@@ -1,0 +1,149 @@
+.ancillary-section {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+    padding: 24px 28px;
+    margin-bottom: 26px;
+}
+
+.ancillary-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 17px;
+    color: #1a2340;
+}
+
+.ancillary-categories {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 18px;
+    padding-bottom: 8px; /* Optional: gives a little space for scrollbar */
+    scrollbar-width: thin; /* Firefox */
+    scroll-snap-type: x mandatory;
+    scrollbar-color: #ccc #f4f4f4;
+}
+
+.ancillary-category-btn {
+    background: #f5f5fa;
+    border: none;
+    border-radius: 24px;
+    padding: 9px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2f3e5c;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s, color 0.18s;
+    scroll-snap-align: start;
+}
+
+.ancillary-category-btn.active {
+    background: #3e73f7;
+    color: #fff;
+}
+
+.ancillary-category-icon {
+    font-size: 1.3em;
+}
+
+.ancillary-options-list {
+    border-top: 1px solid #e6e6ef;
+    padding-top: 18px;
+}
+
+.ancillary-options-scroll {
+    max-height: 250px;
+    overflow-y: auto;
+    /* Hide scroll on webkit but allow scroll, for nice look */
+    scrollbar-width: thin;
+    scrollbar-color: #e6e6ef #fff;
+}
+.ancillary-options-scroll::-webkit-scrollbar {
+    width: 6px;
+    background: #fff;
+}
+.ancillary-options-scroll::-webkit-scrollbar-thumb {
+    background: #e6e6ef;
+    border-radius: 5px;
+}
+
+.ancillary-option {
+    padding: 12px 0;
+    border-bottom: 1px solid #f3f3f7;
+}
+
+.ancillary-option label {
+    display: block;
+    cursor: pointer;
+}
+
+.ancillary-option input[type="checkbox"] {
+    margin-right: 10px;
+    accent-color: #3e73f7;
+    vertical-align: middle;
+}
+
+.ancillary-option-flex {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+}
+
+.ancillary-option-img {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 1px solid #e6e6ef;
+    flex-shrink: 0;
+    margin-right: 6px;
+}
+
+.ancillary-option-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.ancillary-option-name {
+    font-size: 1.07rem;
+    font-weight: 500;
+    color: #232a3f;
+}
+
+.ancillary-option-price {
+    color: #3e73f7;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.ancillary-option-desc {
+    font-size: 0.99rem;
+    color: #6c7ca2;
+    margin-top: 2px;
+}
+
+.ancillary-summary {
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px dashed #e6e6ef;
+    font-size: 1.03rem;
+}
+
+.ancillary-summary-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.ancillary-summary ul {
+    margin: 0;
+    padding-left: 18px;
+    list-style: disc;
+}
+
+.ancillary-summary li {
+    margin-bottom: 3px;
+}

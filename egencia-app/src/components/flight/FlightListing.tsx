@@ -206,7 +206,7 @@ const FlightListing: React.FC = () => {
     }, [applyFilters]);
 
     return (
-        <div className="flight-listing-news-outer sticky">
+        <div className="flight-listing-news-outer">
             <div className="flight-listing-outer">
                 <div className="flight-search-outer">
                     <FlightSearch/>
@@ -279,10 +279,7 @@ const FlightListing: React.FC = () => {
                     </button>
                 )}
             </div>
-            <div style={{maxWidth: '35%'}}>
-                {weather && <WeatherInfo weather={weather}/>}
-                {/*<NewsSection place={to} />*/}
-            </div>
+            <div className="flight-weather">{weather && <WeatherInfo weather={weather}/>}</div>
         </div>
     );
 };

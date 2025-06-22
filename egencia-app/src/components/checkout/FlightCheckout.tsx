@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "../../css/checkout-page.css";
 import BookingProgress from "../progess-bar/BookingProgress";
+import FlightAncillarySection from "../ancillery/FlightAncillarySection";
 
 // Utility to get URL params
 function getUrlParam(key: string) {
@@ -144,6 +145,9 @@ const FlightCheckoutPage: React.FC = () => {
                                     </span>
                         </div>
                     </div>
+                </div>
+                <div className="passenger-modal-ancillary">
+                    <FlightAncillarySection />
                 </div>
                 <button className="checkout-primary-btn" onClick={() => setShowPassengerModal(true)}>
                     Continue to checkout
