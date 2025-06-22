@@ -164,8 +164,8 @@ const FlightAncillarySection: React.FC = () => {
     const [ancillaries, setAncillaries] = useState<AncillaryCategory[]>([]);
 
     return (
-        <div className="ancillary-section">
-            <h3 className="ancillary-title">Enhance your journey</h3>
+        <div className="ancillary-section-page">
+            <h3 className="ancillary-title-page">Enhance your journey</h3>
             {showPop ? (
                 <AncillaryPopUp
                     ancillaries={ancillaries}

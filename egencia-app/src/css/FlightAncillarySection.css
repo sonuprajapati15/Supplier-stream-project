@@ -1,5 +1,19 @@
+.ancillary-section-page {
+    background: #efefef;;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.06);
+    padding: 24px 28px;
+}
+
+.ancillary-title-page {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1a2340;
+}
+
+
 .ancillary-section {
-    background: #fff;
+    background: #ffffff;;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(44,62,80,0.06);
     padding: 24px 28px;

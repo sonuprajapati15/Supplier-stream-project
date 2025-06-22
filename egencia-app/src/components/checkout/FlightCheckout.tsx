@@ -146,7 +146,9 @@ const FlightCheckoutPage: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <FlightAncillarySection />
+                <div style={{background: "#edf2f3"}}>
+                    <FlightAncillarySection/>
+                </div>
                 <button className="checkout-primary-btn" onClick={() => setShowPassengerModal(true)}>
                     Continue to checkout
                 </button>
