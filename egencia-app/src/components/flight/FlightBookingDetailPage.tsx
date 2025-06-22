@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "../../css/flight-booking-detail.css";
 import WeatherInfo from "../other/WeatherInfo";
+import FlightAncillarySection from "../ancillery/FlightAncillarySection";
 
 function formatDateTime(dateStr: string, time?: string) {
     if (!dateStr) return "";
@@ -243,6 +244,7 @@ const FlightBookingDetailModern: React.FC<{ ticketNo?: string }> = ({ticketNo}) 
                         )}
                         <button className="fb-detail-price-link">Transaction history</button>
                     </div>
+                    <FlightAncillarySection />
                 </div>
             </div>
         </div>
