@@ -187,7 +187,12 @@ const ConnectedTripsPage: React.FC = () => {
                                 }}
                             />
                         )}
-                        <div className="trip-type">{booking.flightType || booking.lobName}</div>
+                        <div className="trip-type">
+                            {booking.lobName.toLowerCase() === 'flight' && '✈️'}
+                            {booking.lobName.toLowerCase() === 'train' && '🚆'}
+                            {booking.lobName.toLowerCase() === 'cab' && '🚖'}
+                            {booking.lobName.toLowerCase() === 'hotel' && '🏨'}
+                        </div>
                     </div>
                     <div className="trip-details">
                         <div>
@@ -243,7 +248,10 @@ const ConnectedTripsPage: React.FC = () => {
     );
 
     const bookingCard = (booking: BookingItem) => (
-        <div className="trips-card-outer">
+        <div className="trips-card-outer"
+             style={{
+                 backgroundColor: booking.status.toLowerCase() === 'failed' ? '#eef5fd' : '#f5f5f5',
+             }}>
             <div className="trips-img-outer">
                 <img
                     src={booking.cityImage}
@@ -251,7 +259,9 @@ const ConnectedTripsPage: React.FC = () => {
                     style={{ width: "100%", height: "80%", objectFit: "cover", borderRadius: "20px" }}
                 />
             </div>
-            <div className="trips-card">
+            <div className="trips-card" style={{
+                backgroundColor: booking.status.toLowerCase() === 'failed' ? '#eef5fd' : '#f5f5f5',
+            }}>
                 <div className="trips-card-header">
                     <span className="trips-card-icon">✈️</span>
                     {booking.lobName.toLowerCase() === 'flight' && (
@@ -312,7 +322,7 @@ const ConnectedTripsPage: React.FC = () => {
                     View Details
                 </button>)}
                 {booking.status.toLowerCase() == 'cancelled' && (<button
-                    className="btn-primary" style={{background: "#f60000"}}
+                    className="btn-primary" style={{background: "#3e3e3e"}}
                     onClick={() => navigate(`/trip-detail/booking?ticketNo=${booking.ticketNo}`)}>
                     View Details
                 </button>)}

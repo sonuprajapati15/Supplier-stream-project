@@ -153,8 +153,8 @@
 .trip-type {
     margin-left: 20px;
     color: #0080ff;
-    font-weight: 500;
-    font-size: 0.93rem;
+    font-weight: 1200;
+    font-size: 2rem;
 }
 
 .trip-details {
@@ -376,7 +376,6 @@
 /* booking normal card */
 
 .trips-card-outer {
-    background: #ffffff;
     border-radius: 13px;
     border: 1.5px solid #efeeee;
     display: flex;

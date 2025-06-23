@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import '../../css/FlightAncillarySection.css';
 
 type AncillaryOption = {
@@ -25,7 +25,7 @@ interface AncillarySelectedDetailProps {
     ancillaries: AncillaryCategory[];
 }
 
-const AncillarySelectedDetail: React.FC<AncillarySelectedDetailProps> = ({ selected, ancillaries }) => {
+const AncillarySelectedDetail: React.FC<AncillarySelectedDetailProps> = ({selected, ancillaries}) => {
     return (
         <div className="ancillary-summary">
             {Object.entries(selected).some(([_, ids]) => ids.length > 0) && (
@@ -38,7 +38,7 @@ const AncillarySelectedDetail: React.FC<AncillarySelectedDetailProps> = ({ selec
                                 return opt ? (
                                     <li key={cat.id + '-' + opt.id}>
                                         {cat.name}: <b>{opt.name}</b>{' '}
-                                        <span style={{ color: '#3e73f7' }}>₹{opt.price}</span>
+                                        <span style={{color: '#3e73f7'}}>₹{opt.price}</span>
                                     </li>
                                 ) : null;
                             })
@@ -57,10 +57,10 @@ interface PopCtasProps {
     setShowPop: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PopCtas: React.FC<PopCtasProps> = ({ selected, ancillaries, showPop, setShowPop }) => {
+const PopCtas: React.FC<PopCtasProps> = ({selected, ancillaries, showPop, setShowPop}) => {
     return (
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-            {!showPop && selected && Object.keys(selected).some(catId => selected[catId].length > 0) &&
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+            {!showPop && selected && Object.keys(selected).some(catId => selected[catId].length > 0) && window.location.pathname.includes('trip-detail/booking') &&
                 <button className="ancillary-sec-btn">
                     Continue to Buy
                 </button>
@@ -117,7 +117,7 @@ const AncillaryPopUp: React.FC<AncillaryPopUpProps> = ({
             const newSelected = categorySelected.includes(optionId)
                 ? categorySelected.filter((id) => id !== optionId)
                 : [...categorySelected, optionId];
-            return { ...prev, [categoryId]: newSelected };
+            return {...prev, [categoryId]: newSelected};
         });
     };
 
@@ -133,7 +133,7 @@ const AncillaryPopUp: React.FC<AncillaryPopUpProps> = ({
                     <h3 className="ancillary-title">Enhance your journey with add-on</h3>
                     <button className="ancillary-close-btn" onClick={() => setShowPop(false)}>✖</button>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{display: 'flex', flexDirection: 'column'}}>
                     <div className="ancillary-categories ancillary-options-scroll">
                         {ancillaries.map((cat) => (
                             <button
@@ -153,12 +153,12 @@ const AncillaryPopUp: React.FC<AncillaryPopUpProps> = ({
                                 <label>
                                     <div className="ancillary-option-flex">
                                         <input
-                                            style={{ alignItems: "center" }}
+                                            style={{alignItems: "center"}}
                                             type="checkbox"
                                             checked={selected[activeCategory]?.includes(opt.id) || false}
                                             onChange={() => handleOptionToggle(activeCategory, opt.id)}
                                         />
-                                        <img className="ancillary-option-img" src={opt.image} alt={opt.name} />
+                                        <img className="ancillary-option-img" src={opt.image} alt={opt.name}/>
                                         <span className="ancillary-option-main">
                                             <span className="ancillary-option-name">{opt.name}</span>
                                             <span className="ancillary-option-price">₹{opt.price}</span>
@@ -171,9 +171,9 @@ const AncillaryPopUp: React.FC<AncillaryPopUpProps> = ({
                     </div>
                 </div>
                 <div>
-                    <AncillarySelectedDetail selected={selected} ancillaries={ancillaries} />
+                    <AncillarySelectedDetail selected={selected} ancillaries={ancillaries}/>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <div style={{display: 'flex', flexDirection: 'row'}}>
                     {!showPop && selected && Object.keys(selected).some(catId => selected[catId].length > 0) &&
                         <button className="ancillary-sec-btn">
                             Continue to Buy
@@ -194,7 +194,7 @@ const FlightAncillarySection: React.FC = () => {
     const [showPop, setShowPop] = useState(false);
 
     return (
-        <div style={{background: '#f3f3f3', boxShadow: "0 2px 8px rgba(44,62,80,0.06)" }}>
+        <div style={{background: '#f3f3f3', boxShadow: "0 2px 8px rgba(44,62,80,0.06)"}}>
             <div className="ancillary-section-page">
                 <h3 className="ancillary-title-page">Enhance your journey</h3>
                 {showPop ? (
@@ -208,7 +208,7 @@ const FlightAncillarySection: React.FC = () => {
                     />
                 ) : (
                     <div>
-                        <AncillarySelectedDetail selected={selected} ancillaries={ancillaries} />
+                        <AncillarySelectedDetail selected={selected} ancillaries={ancillaries}/>
                     </div>
                 )}
             </div>

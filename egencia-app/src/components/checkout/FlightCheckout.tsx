@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../../css/checkout-page.css";
-import BookingProgress from "../progess-bar/BookingProgress";
+import BookingProgressWrapper from "../progess-bar/BookingProgress";
 import FlightAncillarySection from "../ancillery/FlightAncillarySection";
 
 // Utility to get URL params
@@ -25,7 +25,6 @@ const FlightCheckoutPage: React.FC = () => {
     const [flight, setFlight] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [showPassengerModal, setShowPassengerModal] = useState(false);
-    const [progress, setProgress] = useState(0);
     const [booking, setBooking] = useState(false);
     const [weather, setWeather] = useState<any>(null);
 
@@ -51,33 +50,6 @@ const FlightCheckoutPage: React.FC = () => {
             .then(res => res.json())
             .then(setWeather);
     }, [flight]);
-
-    useEffect(() => {
-        if (!booking) return;
-        let stage = 0;
-        const interval = setInterval(() => {
-            setProgress((old) => {
-                if (old >= 5) {
-                    clearInterval(interval);
-                    // Add folding animation before redirecting to /trips
-                    const checkoutLayout = document.querySelector('.checkout-layout') as HTMLElement;
-                    if (checkoutLayout) {
-                        checkoutLayout.style.transition = 'transform 0.7s cubic-bezier(0.77,0,0.18,1), opacity 0.7s';
-                        checkoutLayout.style.transform = 'scaleY(0)';
-                        checkoutLayout.style.opacity = '0';
-                        setTimeout(() => {
-                            window.location.href = "/trips";
-                        }, 700);
-                    } else {
-                        window.location.href = "/trips";
-                    }
-                    return 5;
-                }
-                return old + 1;
-            });
-        }, 600);
-        return () => clearInterval(interval);
-    }, [booking]);
 
     if (loading || !flight) {
         return <div className="checkout-loading">Loading flight data...</div>;
@@ -242,12 +214,11 @@ const FlightCheckoutPage: React.FC = () => {
                     onBook={() => {
                         setShowPassengerModal(false);
                         setBooking(true);
-                        setProgress(1);
                     }}
                 />
             )}
 
-            {booking && <BookingProgress stages={progress}/>}
+            {booking && <BookingProgressWrapper/>}
         </div>
     );
 };
