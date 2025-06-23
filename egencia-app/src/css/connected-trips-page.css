@@ -151,7 +151,7 @@
 }
 
 .trip-type {
-    margin-left: 20px;
+    margin-left: 15px;
     color: #0080ff;
     font-weight: 1200;
     font-size: 2rem;
@@ -165,7 +165,7 @@
 }
 
 .trip-city {
-    margin-left: 10px;
+    margin-left: 9px;
     font-size: 1.06rem;
     font-weight: 500;
 }
@@ -176,7 +176,7 @@
 }
 
 .trip-time {
-    margin-left: 12px;
+    margin-left: 8px;
     margin-top: 5px;
     font-size: 1.02rem;
     color: #222;

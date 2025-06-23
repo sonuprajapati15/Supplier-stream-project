@@ -23,6 +23,7 @@ interface ChooseFare {
 interface BookingItem {
     _id: string;
     age: number;
+    hotelName: string,
     aircraftType?: string;
     airline?: Airline;
     arrivalTime: string;
@@ -35,11 +36,17 @@ interface BookingItem {
     checkInCounter: string;
     chooseFare: ChooseFare;
     cityImage?: string;
+    pickup?: string,
+    drop?: string,
+    dropTime?: string,
+    pickupTime?: string,
     covidSafety: string;
     date: string;
     date_time: string;
     departureTime: string;
     duration: string;
+    checkIn: string,
+    checkOut: string,
     ecoFriendly: string;
     email: string;
     entertainment: string;
@@ -190,33 +197,61 @@ const ConnectedTripsPage: React.FC = () => {
                         <div className="trip-type">
                             {booking.lobName.toLowerCase() === 'flight' && '✈️'}
                             {booking.lobName.toLowerCase() === 'train' && '🚆'}
-                            {booking.lobName.toLowerCase() === 'cab' && '🚖'}
                             {booking.lobName.toLowerCase() === 'hotel' && '🏨'}
+                            {booking.lobName.toLowerCase() === 'cab' && '🚖'}
                         </div>
                     </div>
-                    <div className="trip-details">
-                        <div>
-                            <div className="trip-city bold">{booking.from}</div>
-                            <div className="trip-time">{booking.departureTime}</div>
-                            <div className="trip-date">{new Date(booking.date).toLocaleDateString(undefined, {
-                                weekday: 'short',
-                                day: '2-digit',
-                                month: 'short',
-                                year: '2-digit'
-                            })}</div>
+                    {booking.lobName.toLowerCase() == 'hotel' && (
+                        <div style={{marginTop: "30px"}}>
+                        <div className="trip-city bold" style={{marginLeft:"55px"}}>{booking.hotelName}</div>
+                        <div className="trip-details" style={{marginTop:"10px"}}>
+                            <div>
+                                <div className="trip-time">Check-in</div>
+                                <div className="trip-date">{new Date(booking.checkOut).toLocaleDateString(undefined, {
+                                    weekday: 'short',
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: '2-digit'
+                                })}</div>
+                            </div>
+                            <div className="trip-arrow"> → </div>
+                            <div>
+                                <div className="trip-time">Check-Out</div>
+                                <div className="trip-date">{new Date(booking.checkOut).toLocaleDateString(undefined, {
+                                    weekday: 'short',
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: '2-digit'
+                                })}</div>
+                            </div>
                         </div>
-                        <div className="trip-arrow"> → </div>
-                        <div>
-                            <div className="trip-city bold">{booking.to}</div>
-                            <div className="trip-time">{booking.arrivalTime}</div>
-                            <div className="trip-date">{new Date(booking.date).toLocaleDateString(undefined, {
-                                weekday: 'short',
-                                day: '2-digit',
-                                month: 'short',
-                                year: '2-digit'
-                            })}</div>
                         </div>
-                    </div>
+                    )}
+                    {booking.lobName.toLowerCase() != 'hotel' && (
+                        <div className="trip-details">
+                            <div>
+                                <div className="trip-city bold">{booking.from}{booking.pickup}</div>
+                                <div className="trip-time">{booking.departureTime}{booking.pickupTime}</div>
+                                <div className="trip-date">{new Date(booking.date).toLocaleDateString(undefined, {
+                                    weekday: 'short',
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: '2-digit'
+                                })}</div>
+                            </div>
+                            <div className="trip-arrow"> → </div>
+                            <div>
+                                <div className="trip-city bold">{booking.to}{booking.drop}</div>
+                                <div className="trip-time">{booking.arrivalTime}{booking.dropTime}</div>
+                                <div className="trip-date">{new Date(booking.date).toLocaleDateString(undefined, {
+                                    weekday: 'short',
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: '2-digit'
+                                })}</div>
+                            </div>
+                        </div>
+                    )}
                     <div className="trip-card-actions">
                         {activeTab !== 'complete' && activeTab !== 'cancelled' && (
                             <button
