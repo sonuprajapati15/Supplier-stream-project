@@ -165,21 +165,24 @@ const ConnectedTripsPage: React.FC = () => {
                     }}/>
                 </div>
                 <div className="trip-card" key={booking._id}>
-                    <div className={`trip-status ${booking.status.toLowerCase()}`}>
-                        {booking.status.charAt(0) + booking.status.slice(1).toLowerCase()}
+                    <div style={{flexDirection:"row", display: "flex", alignItems: "center"}}>
+                        <div className={`trip-status ${booking.status.toLowerCase()}`}>
+                            {booking.status.charAt(0) + booking.status.slice(1).toLowerCase()}
+                        </div>
                     </div>
                     <div className="trip-card-header">
                         {booking.bgImage && (
                             <img
-                                height="140px"
-                                width="80px"
+                                width="100px"
+                                height="80px"
                                 src={booking.bgImage}
                                 alt={booking.cityImage}
                                 className="trip-groups-container"
                                 style={{
+                                    borderRadius: "10px",
                                     margin: '10px 15px', // Sets top/bottom margin to 10px and left/right margin to 15px
                                     background: '#f1f1f1',
-                                    objectFit: 'contain',
+                                    objectFit: 'cover',
                                     border: '1.5px solid #eef2f7',
                                 }}
                             />
@@ -208,10 +211,6 @@ const ConnectedTripsPage: React.FC = () => {
                                 year: '2-digit'
                             })}</div>
                         </div>
-                    </div>
-                    <div style={{flexDirection:"column", marginLeft: '15px', marginRight: '15px'}}>
-                        <div className="trip-booking-id">PNR :-  <span className="bold">{booking.pnrNo}</span></div>
-                        <div className="trip-booking-id">Booking ID:- <span className="bold">{booking.ticketNo}</span></div>
                     </div>
                     <div className="trip-card-actions">
                         {activeTab !== 'complete' && activeTab !== 'cancelled' && (

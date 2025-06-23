@@ -8,7 +8,7 @@ const getStepColor = (idx: number, stages: number) => {
     if (idx < stages) {
         // Assign a different color for each completed step
         const colors = ["#867070", "#cea828", "#2196f3", "#0fd401", "#9c27b0"];
-        return colors[idx];
+        return colors[4];
     }
     return "#e6e6e6"; // inactive (gray) // completed step (gold)
 };

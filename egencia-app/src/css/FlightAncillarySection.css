@@ -1,7 +1,6 @@
 .ancillary-section-page {
     background: #efefef;;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(44,62,80,0.06);
     padding: 24px 28px;
 }
 
@@ -63,6 +62,7 @@
 .ancillary-options-list {
     border-top: 1px solid #e6e6ef;
     padding-top: 18px;
+    min-height: 450px;
 }
 
 .ancillary-options-scroll {
@@ -104,8 +104,8 @@
 }
 
 .ancillary-option-img {
-    width: 54px;
-    height: 54px;
+    width: 100px;
+    height: 80px;
     object-fit: cover;
     border-radius: 10px;
     border: 1px solid #e6e6ef;
@@ -139,9 +139,9 @@
 }
 
 .ancillary-summary {
-    margin-top: 14px;
+    margin-top: 10px;
     padding-top: 8px;
-    border-top: 1px dashed #e6e6ef;
+    border-top: 1px dashed #3195f8;
     font-size: 1.03rem;
 }
 
@@ -175,8 +175,8 @@
 .ancillary-primary-btn {
     background: #ffffff;
     color: #0f87e8;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.7rem;
+    font-weight: 550;
     border-color: #0f87e8;
     border-radius: 10px;
     padding: 1rem 2rem;
@@ -188,6 +188,26 @@
 }
 .ancillary-primary-btn:active, .ancillary-primary-btn:hover {
     background: #0f87e8;
+    color: #ffffff;
+
+}
+
+.ancillary-sec-btn {
+    background: #0f87e8;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 550;
+    border-color: #0f87e8;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    max-width: 200px;
+    max-height: 50px;
+    transition: background 0.18s, box-shadow 0.18s;
+    margin-top: 1.5rem;
+}
+.ancillary-sec-btn:active, .ancillary-sec-btn:hover {
+    background: #015ca7;
     color: #ffffff;
 
 }

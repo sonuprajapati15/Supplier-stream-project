@@ -17,8 +17,10 @@ const Home: React.FC = () => {
         fetch("http://localhost:9000/supplier/stream/all/booking?userId=1234")
             .then((res) => res.json())
             .then((data) => {
+                console.log("upcoming trip data :" + JSON.stringify(data));
                 const upcoming = data.upcoming || [];
-                setUpcomingTrips(upcoming.slice(0, 3)); // Pick top 3 entries
+                const bookings = upcoming.flat(2); // Flatten the nested arrays to extract all booking objects
+                setUpcomingTrips(bookings.slice(0, 3)); // Pick top 3 entries
                 setLoading(false);
             })
             .catch(() => setLoading(false));
@@ -52,11 +54,11 @@ const Home: React.FC = () => {
                     {loading ? (
                         <div>Loading...</div>
                     ) : (
-                        <div className="trip-cards">
+                       <div className="trip-cards">
                             {upcomingTrips.map((trip, index) => (
-                                <div className="trip-card" key={index}>
-                                    <img src={trip.cityImage || trip.bgImage} alt={trip.to}/>
-                                    <div>
+                                <div className="upcoming-trip-card" key={index}>
+                                    <img src={trip.cityImage || trip.bgImage} alt={trip.to} style={{marginLeft: "20px", marginTop: "12px"}}/>
+                                    <div style={{marginLeft: "30px", marginTop: "12px"}}>
                                         {trip.from && trip.to ? (
                                             <>
                                                 <strong>{trip.from}</strong> → <strong>{trip.to}</strong>

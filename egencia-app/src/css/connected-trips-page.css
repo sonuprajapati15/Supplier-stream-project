@@ -70,11 +70,6 @@
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.trip-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
 .trip-card {
     background: #fdfdfd;
     border-radius: 16px;
@@ -86,6 +81,13 @@
     padding: 5px 5px 5px 0px;
     position: relative;
     height: 140px;
+    display: flex;
+    flex-direction: row;
+}
+
+.trip-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .trip-status {
@@ -149,7 +151,7 @@
 }
 
 .trip-type {
-    margin-left: auto;
+    margin-left: 20px;
     color: #0080ff;
     font-weight: 500;
     font-size: 0.93rem;
@@ -158,8 +160,8 @@
 .trip-details {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin: 5px 10px 10px 10px;
+    align-items: center;
+    margin-left: 50px;
 }
 
 .trip-city {
@@ -199,7 +201,6 @@
 }
 
 .trip-booking-id {
-    margin: 10px 0 0 0;
     font-size: 0.90rem;
     color: #333;
 }
@@ -233,11 +234,11 @@
     flex: 1;
     padding: 8px 0;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 0.8rem;
     cursor: pointer;
     font-weight: 600;
     outline: none;
-    min-width: 180px;
+    min-width: 150px;
     height: 45px;
     border: 2px solid #007aff;
 }
