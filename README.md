@@ -1,114 +1,118 @@
 # Supplier stream project
 
-![flowchart.png](flowchart.png)
-
 ```mermaid
-flowchart TB
+flowchart LR
 
   %% --- LAYER 1: DATA FEEDS ---
-  subgraph DataFeeds["Data Feeds & Schedules"]
-    direction TB
-    ATPCO["ATPCO (Fares)\nAirline Tariff Publishing Company"]
-    OAG["OAG (Schedules)\nOfficial Airline Guide"]
-    Cirium["Cirium (Schedules)\nFlight Analytics"]
+  subgraph DataFeeds["Layer 1: Data Feeds & Schedules"]
+    direction LR
+    ATPCO["🛫 ATPCO (Fares)\nAirline Tariff Publishing Company"]
+    OAG["📅 OAG (Schedules)\nOfficial Airline Guide"]
+    Cirium["📊 Cirium (Schedules)\nFlight Analytics"]
   end
 
   %% --- LAYER 2: AGGREGATOR ---
-  subgraph Aggregator["GDS Aggregator\n(Real-time Data Ingestion)"]
-    direction TB
-    GDSAggregator["GDS Data Aggregator"]
+  subgraph Aggregator["Layer 2: GDS Aggregator\n(Real-time Data Ingestion)"]
+    direction LR
+    GDSAggregator["🔄 GDS Data Aggregator"]
   end
 
-  %% --- LAYER 3: PROVIDERS LAYER ---
-  subgraph ProvidersLayer["GDS Providers"]
+  %% --- LAYER 3: PROVIDERS LAYER (horizontal providers) ---
+  subgraph ProvidersLayer["Layer 3: GDS Providers"]
     direction LR
-    subgraph AmadeusBlock["Amadeus"]
-      direction TB
-      AFlights["Flights"]
-      AItineraries["Itineraries"]
-      ABookings["Bookings"]
-      AMeta["Metadata"]
-      AAncillaries["Ancillaries"]
-    end
+    AmadeusBlock["Amadeus"]
+    SabreBlock["Sabre"]
+    TravelportBlock["Travelport"]
+    PegasusBlock["Pegasus"]
+    AbacusBlock["Abacus"]
+  end
 
-    subgraph SabreBlock["Sabre"]
-      direction TB
-      SFlights["Flights"]
-      SItineraries["Itineraries"]
-      SBookings["Bookings"]
-      SMeta["Metadata"]
-      SAncillaries["Ancillaries"]
-    end
+  subgraph AmadeusBlock["Amadeus"]
+    direction LR
+    AFlights["✈️ Flights"]
+    AItineraries["🗺️ Itineraries"]
+    ABookings["📔 Bookings"]
+    AMeta["ℹ️ Metadata"]
+    AAncillaries["🎒 Ancillaries"]
+  end
 
-    subgraph TravelportBlock["Travelport"]
-      direction TB
-      TFlights["Flights"]
-      TItineraries["Itineraries"]
-      TBookings["Bookings"]
-      TMeta["Metadata"]
-      TAncillaries["Ancillaries"]
-      Galileo["Galileo"]
-      Apollo["Apollo"]
-      Worldspan["Worldspan"]
-    end
+  subgraph SabreBlock["Sabre"]
+    direction LR
+    SFlights["✈️ Flights"]
+    SItineraries["🗺️ Itineraries"]
+    SBookings["📔 Bookings"]
+    SMeta["ℹ️ Metadata"]
+    SAncillaries["🎒 Ancillaries"]
+  end
 
-    subgraph PegasusBlock["Pegasus"]
-      direction TB
-      PFlights["Flights"]
-      PItineraries["Itineraries"]
-      PBookings["Bookings"]
-      PMeta["Metadata"]
-      PAncillaries["Ancillaries"]
-    end
+  subgraph TravelportBlock["Travelport"]
+    direction LR
+    TFlights["✈️ Flights"]
+    TItineraries["🗺️ Itineraries"]
+    TBookings["📔 Bookings"]
+    TMeta["ℹ️ Metadata"]
+    TAncillaries["🎒 Ancillaries"]
+    Galileo["🌐 Galileo"]
+    Apollo["🚀 Apollo"]
+    Worldspan["🌎 Worldspan"]
+  end
 
-    subgraph AbacusBlock["Abacus"]
-      direction TB
-      ABFlights["Flights"]
-      ABItineraries["Itineraries"]
-      ABBookings["Bookings"]
-      ABMeta["Metadata"]
-      ABAncillaries["Ancillaries"]
-    end
+  subgraph PegasusBlock["Pegasus"]
+    direction LR
+    PFlights["✈️ Flights"]
+    PItineraries["🗺️ Itineraries"]
+    PBookings["📔 Bookings"]
+    PMeta["ℹ️ Metadata"]
+    PAncillaries["🎒 Ancillaries"]
+  end
+
+  subgraph AbacusBlock["Abacus"]
+    direction LR
+    ABFlights["✈️ Flights"]
+    ABItineraries["🗺️ Itineraries"]
+    ABBookings["📔 Bookings"]
+    ABMeta["ℹ️ Metadata"]
+    ABAncillaries["🎒 Ancillaries"]
   end
 
   %% --- LAYER 4: E-TRAVELLER MICROSERVICES ---
-  subgraph ETravellerMicroservices["E-Traveller Supplier Microservices"]
-    direction TB
-    FlightsSupplierService["Flights Supplier Service"]
-    ItinerariesSupplierService["Itineraries Supplier Service"]
-    BookingsSupplierService["Bookings Supplier Service"]
-    MetaSupplierService["Meta Supplier Service"]
-    AncillariesSupplierService["Ancillaries Supplier Service"]
+  subgraph ETravellerMicroservices["Layer 4: E-Traveller Supplier Microservices"]
+    direction LR
+    FlightsSupplierService["✈️ Flights Supplier Service"]
+    ItinerariesSupplierService["🗺️ Itineraries Supplier Service"]
+    BookingsSupplierService["📔 Bookings Supplier Service"]
+    MetaSupplierService["ℹ️ Meta Supplier Service"]
+    AncillariesSupplierService["🎒 Ancillaries Supplier Service"]
   end
 
   %% --- LAYER 5: THIRD PARTY SERVICES ---
-  subgraph ThirdPartyServices["Third-Party Metadata Services"]
-    direction TB
-    ThirdPartyTemp["Temperature Service"]
-    ThirdPartyWeather["Weather Service"]
-    ThirdPartyImages["Image Service"]
+  subgraph ThirdPartyServices["Layer 5: Third-Party Metadata Services"]
+    direction LR
+    ThirdPartyTemp["🌡️ Temperature Service"]
+    ThirdPartyWeather["⛅ Weather Service"]
+    ThirdPartyImages["🖼️ Image Service"]
   end
 
   %% --- LAYER 6: API/METADATA ---
-  subgraph MetaDataLayer["Metadata & Enrichment"]
-    direction TB
-    MetaData["Meta Data"]
-    Timezone["Timezone"]
-    Temperature["Temperature"]
-    Weather["Weather"]
-    ImagesMeta["Images Metadata"]
+  subgraph MetaDataLayer["Layer 6: Metadata & Enrichment"]
+    direction LR
+    MetaData["🗄️ Meta Data"]
+    Timezone["🕒 Timezone"]
+    Temperature["🌡️ Temperature"]
+    Weather["⛅ Weather"]
+    ImagesMeta["🖼️ Images Metadata"]
   end
 
   %% --- LAYER 7: FRONTEND/UI ---
-  subgraph UILayer["Frontend / UI"]
-    direction TB
-    UIStream["E-Traveller UI"]
+  subgraph UILayer["Layer 7: Frontend / UI"]
+    direction LR
+    UIStream["🖥️ E-Traveller UI"]
   end
 
   %% --- CONNECTIONS ---
-  ATPCO -->|Fares| GDSAggregator
-  OAG -->|Schedules| GDSAggregator
-  Cirium -->|Schedules| GDSAggregator
+  ATPCO --> GDSAggregator
+  OAG --> GDSAggregator
+  Cirium --> GDSAggregator
 
   GDSAggregator --> AmadeusBlock
   GDSAggregator --> SabreBlock
@@ -116,7 +120,6 @@ flowchart TB
   GDSAggregator --> PegasusBlock
   GDSAggregator --> AbacusBlock
 
-  %% PROVIDER OUTPUTS TO MICROSERVICES
   AFlights --> FlightsSupplierService
   SFlights --> FlightsSupplierService
   TFlights --> FlightsSupplierService
@@ -147,14 +150,12 @@ flowchart TB
   PAncillaries --> AncillariesSupplierService
   ABAncillaries --> AncillariesSupplierService
 
-  %% SUPPLIER MICROSERVICES TO METADATA LAYER
   FlightsSupplierService --> UIStream
   ItinerariesSupplierService --> UIStream
   BookingsSupplierService --> UIStream
   MetaSupplierService --> MetaData
   AncillariesSupplierService --> UIStream
 
-  %% THIRD PARTY TO METADATA
   ThirdPartyTemp -- Temperature --> MetaSupplierService
   ThirdPartyWeather -- Weather --> MetaSupplierService
   ThirdPartyImages -- ImagesMeta --> MetaSupplierService
@@ -165,7 +166,6 @@ flowchart TB
   MetaSupplierService --> Weather
   MetaSupplierService --> ImagesMeta
 
-  %% METADATA TO UI
   MetaData --> UIStream
   Timezone --> UIStream
   Temperature --> UIStream
