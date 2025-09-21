@@ -32,6 +32,8 @@ public class LocationController {
     private String weatherEndpoint;
     @Value("${weather-bg-images-json-path}")
     private String weatherBgImagesJson;
+    @Value("${timezone.api}")
+    private String timezone;
 
     private Map<String, String> weatherConditionMap;
 
@@ -65,6 +67,10 @@ public class LocationController {
                 data.put("weatherBgImage", weatherConditionMap.get("Patchy snow possible")); // Fallback image if condition not found
             }
         }
+        Map<String, String> locationMap = objectMapper.readValue(objectMapper.writeValueAsString(data.get("location")), Map.class);
+        String timeZoneUrl = timezone.replaceAll("LATITUDE", String.valueOf(locationMap.get("lat")))
+                .replaceAll("LONGITUDE", String.valueOf(locationMap.get("lon")));
+        data.put("timezoneData", restTemplate.getForObject(timeZoneUrl, Map.class));
         return data;
     }
 }
