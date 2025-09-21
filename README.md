@@ -1,6 +1,5 @@
 # Supplier stream project
 
-![flowchart.png](flowchart.png)
 
 ```mermaid
 flowchart TB
